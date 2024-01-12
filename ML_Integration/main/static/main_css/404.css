@@ -1,2 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+
+#img404 {
+    height: 20vh;
+    width: 20vh;
+}
