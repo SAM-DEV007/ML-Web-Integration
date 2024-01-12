@@ -9,7 +9,7 @@
     </head>
     <body>
         <div>
-            <a title="Go to Home" href="/">
+            <a title="Go to Home" href="{% url 'main' %}">
                 <img id="img404" src="{% static 'main/assets/Logo.jpg' %}" alt="404">
             </a>
         </div>
@@ -18,7 +18,7 @@
             <h1 id="header">Page Not Found!</h1>
             <p id="para1">Sorry, but the page you were trying to view does not exist.</p>
             <p id="para2">Please check that the address is spelt correctly. <br>Or you can visit the 
-                <a id="home_link" href="/home">home page</a>.
+                <a id="home_link" href="{% url 'home' %}">home page</a>.
             </p>
         </div>
 
