@@ -1,11 +1,14 @@
-{% extends 'master.html' %}
+{% load static %}
 
-{% block title %}
-    Home
-{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="{% static 'main/assets/Logo.jpg' %}">
+        <title>Home</title>
+    </head>
+    <body>
+        <h1>Home</h1>
 
-{% block content %}
-    <h1>Home</h1>
-
-    <p>Welcome to the home page!</p>
-{% endblock %}
+        <p>Welcome to the home page!</p>
+    </body>
+</html>
