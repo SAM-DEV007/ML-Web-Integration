@@ -1,0 +1,21 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="{% static 'main/assets/Logo.jpg' %}">
+        <link rel="stylesheet" href="{% static 'main/css/500.css' %}">
+        <title>500 - Internal Server Error</title>
+    </head>
+    <body>
+        <div>
+            <img id="img500" src="{% static 'main/assets/Robot500.png' %}" alt="500">
+        </div>
+
+        <div>
+            <h1 id="header">Internal Server Error!</h1>
+            <p id="para">An Internal server error has occured. <br>Please refresh the page or try again later.</p>
+            </p>
+        </div>
+    </body>
+</html>
