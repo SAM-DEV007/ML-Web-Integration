@@ -8,10 +8,22 @@
         <title>404 - Page Not Found</title>
     </head>
     <body>
-        <a href="">
-            <img id="img404" src="{% static 'main_assets/Logo.jpg' %}" alt="404">
-        </a>    
-        <h1>Page Not Found</h1>
-        <p>Sorry, but the page you were trying to view does not exist.</p>
+        <div>
+            <a title="Go to Home" href="/">
+                <img id="img404" src="{% static 'main_assets/Logo.jpg' %}" alt="404">
+            </a>
+        </div>
+
+        <div class="text">
+            <h1 id="header">Page Not Found!</h1>
+            <p id="para1">Sorry, but the page you were trying to view does not exist.</p>
+            <p id="para2">Please check that the address is spelt correctly. <br>Or you can visit the 
+                <a id="home_link" href="/">home page</a>.
+            </p>
+        </div>
+
+        <div class="img">
+            <img id="robot" src="{% static 'main_assets/Robot404.png' %}" alt="404">
+        </div>
     </body>
 </html>
