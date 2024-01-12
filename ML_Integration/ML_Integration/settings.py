@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ig_flappybird',
+    'ig_handgesture',
+    'ig_mathseq',
 ]
 
 MIDDLEWARE = [
