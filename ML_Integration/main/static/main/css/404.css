@@ -2,8 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
 
 body {
-    margin: 5vh;
-    margin-bottom: 0vh;
     background-color: black;
 }
 
@@ -47,14 +45,6 @@ body {
     color: white;
 }
 
-.text {
-    margin-top: 10vh;
-    width: 35rem;
-    float: left;
-}
-
-.img {
-    margin-top: 10vh;
-    width: 50%;
-    display: inline-block;
+.container {
+    display: flex;
 }
