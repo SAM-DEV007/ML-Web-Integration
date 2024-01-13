@@ -161,3 +161,6 @@ cython_debug/
 
 # Django staticfiles
 ML_Integration/staticfiles/
+
+# Web Development files
+Web_Dev/
