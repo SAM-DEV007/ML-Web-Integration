@@ -3,6 +3,7 @@
 
 body {
     margin: 5vh;
+    background-color: black;
 }
 
 #robot {
@@ -22,27 +23,27 @@ body {
 #header {
     font-family: 'Quicksand', sans-serif;
     font-size: 7vh;
-    color: black;
+    color: white;
     margin-top: 10vh;
 }
 
 #para1 {
     font-family: 'Courier New', Courier;
     font-size: 3vh;
-    color: black;
+    color: white;
     margin-top: 3vh;
 }
 
 #para2 {
     font-family: 'Arial', sans-serif;
     font-size: 2vh;
-    color: black;
+    color: white;
     margin-top: 1vh;
 }
 
 #home_link {
     text-decoration: underline;
-    color: black;
+    color: white;
 }
 
 .text {
