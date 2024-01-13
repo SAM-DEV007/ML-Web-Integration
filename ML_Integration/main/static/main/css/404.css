@@ -55,5 +55,5 @@ body {
 .img {
     margin-top: 10vh;
     width: 50%;
-    float: right;
+    display: inline-block;
 }
