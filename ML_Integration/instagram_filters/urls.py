@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+
+app_name = 'instagram_filters'
 urlpatterns = [
     path('', views.home, name='index'),
     path('flappy_bird/', views.flappy_bird, name='flappy_bird'),
