@@ -3,12 +3,34 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="{% static 'main/js/home.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'main/css/home.css' %}">
         <link rel="icon" href="{% static 'main/assets/Logo.jpg' %}">
         <title>Home</title>
     </head>
     <body>
-        <h1>Home</h1>
-
-        <p>Welcome to the home page!</p>
+        <div class="main">
+            <img id="logo" src="{% static 'main/assets/Logo.jpg' %}" alt="Logo">
+            <h1 id="title">ML Integrations</h1>
+        </div>
+        <div class="container">
+            <div class="window">
+                <div id="control">
+                    <img src="{% static 'main/assets/Left Arrow.png' %}" alt="Left" id="left" class="arrow">
+                    <img src="{% static 'main/assets/Right Arrow.png' %}" alt="Right" id="right" class="arrow">
+                </div>
+                <div id="igwindow">
+                    <h2 id="igwindow_text">Instagram Filters</h2>
+                    <h4 class="igtxt" id="igflappy_text">Flappy Bird</h4>
+                    <h4 class="igtxt" id="igmaths_text">Maths Equation</h4>
+                    <h4 class="igtxt" id="ighand_text">Hand Gesture</h4>
+                </div>
+                <div id="wclwindow">
+                    <h2 id="wclwindow_text">COMING SOON...</h2>
+                </div> 
+            </div> 
+        </div>
     </body>
+    {% include 'footer.html' %}
 </html>
