@@ -1,17 +1,16 @@
 body {
-    margin: 5vh;
-    margin-bottom: 0vh;
-    min-height: 95vh;
+    margin: 38.8px;
+    margin-bottom: 0px;
+    background-color: black;
+    min-height: 737.2px;
     display: flex;
     flex-direction: column;
-    margin-bottom: 0vh;
 }
 
 #footer{
-    position: relative;
-    margin-top: auto;
     width: 100%;
     text-align: center;
+    margin-top: auto;
     color: white;
 }
 

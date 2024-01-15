@@ -6,13 +6,13 @@ body {
 }
 
 #robot {
-    height: 50vh;
-    width: 60vh;
+    height: 388px;
+    width: 465.6px;
 }
 
 #img404 {
-    height: 10vh;
-    width: 10vh;
+    height: 77.6px;
+    width: 77.6px;
 }
 
 #img404:hover {
@@ -21,23 +21,23 @@ body {
 
 #header {
     font-family: 'Quicksand', sans-serif;
-    font-size: 7vh;
+    font-size: 3.5rem;
     color: white;
-    margin-top: 10vh;
+    margin-top: 77.6px;
 }
 
 #para1 {
     font-family: 'Courier New', Courier;
-    font-size: 3vh;
+    font-size: 1.5rem;
     color: white;
-    margin-top: 3vh;
+    margin-top: 23.28px;
 }
 
 #para2 {
     font-family: 'Arial', sans-serif;
-    font-size: 2vh;
+    font-size: 1rem;
     color: white;
-    margin-top: 1vh;
+    margin-top: 7.76px;
 }
 
 #home_link {
@@ -47,4 +47,5 @@ body {
 
 .container {
     display: flex;
+    min-height: calc(100vh - 270px);
 }
