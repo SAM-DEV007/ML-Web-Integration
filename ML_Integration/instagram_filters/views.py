@@ -4,7 +4,10 @@ from django.template import loader
 
 
 def home(request):
-    return redirect('main:main')
+    web = redirect('main:main')
+    if request.COOKIES.get('igstat'):
+        web.set_cookie('igstat', 0)
+    return web
 
 
 def flappy_bird(request):
