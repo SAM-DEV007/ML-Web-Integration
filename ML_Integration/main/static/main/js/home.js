@@ -16,8 +16,12 @@ function ignorm() {
     igstat = 0;
 }
 
-$(document).on('click', '#igwindow_text', function() {
+function igwindow() {
     if (igstat == 0) igext(); else ignorm();
+}
+
+$(document).on('click', '#igwindow_text', function() {
+    igwindow();
 });
 
 let pages = ['#igwindow', '#wclwindow'];
@@ -35,7 +39,7 @@ function showarrow(arrow) {
     $(arrow).addClass('.arrowshow');
 }
 
-$(document).on('click', '#right', function() {
+function rightarrow() {
     if (curr == 0 && igstat == 1) {
         ignorm();
         ig_force_change = true;
@@ -52,9 +56,13 @@ $(document).on('click', '#right', function() {
     }
     $(pages[curr]).css('visibility', 'visible');
     $(headings[curr]).fadeTo(1000, 1);
+}
+
+$(document).on('click', '#right', function() {
+    rightarrow();
 });
 
-$(document).on('click', '#left', function() {
+function leftarrow() {
     $(pages[curr]).css('visibility', 'hidden');
     $(headings[curr]).fadeTo(1000, 0);
     curr -= 1;
@@ -71,4 +79,8 @@ $(document).on('click', '#left', function() {
     }
     $(pages[curr]).css('visibility', 'visible');
     $(headings[curr]).fadeTo(1000, 1);
+}
+
+$(document).on('click', '#left', function() {
+    leftarrow();
 });
