@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-89r#=^k6eqv!e9oym5sn!-sjquj**abfuna!mct19rcxg95wcg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -58,6 +58,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             BASE_DIR / 'main/templates',
+            BASE_DIR / 'instagram_filters/templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
