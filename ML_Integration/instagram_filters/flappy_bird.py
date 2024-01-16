@@ -11,8 +11,12 @@ import numpy as np
 from django.conf import settings
 
 
-def gen(obj):
+def flappy_gen(restart=0):
+    obj = FlappyBird()
     while True:
+        if restart == 1:
+            obj = FlappyBird()
+            restart = 0
         frame = obj.main()
         yield (b'--frame\r\n'
 				b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
