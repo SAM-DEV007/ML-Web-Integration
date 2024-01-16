@@ -105,7 +105,7 @@ class HandGesture():
         mask_peace = mask(peace)
 
     
-    def __del__(slef):
+    def __del__(self):
         cv2.destroyAllWindows()
 
 

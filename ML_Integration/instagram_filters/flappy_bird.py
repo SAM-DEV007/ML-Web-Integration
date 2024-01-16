@@ -74,7 +74,7 @@ class FlappyBird():
         self.p_h, self.p_w, _ = self.original_pillar.shape
     
 
-    def __del__(slef):
+    def __del__(self):
         cv2.destroyAllWindows()
 
 
