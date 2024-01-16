@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, StreamingHttpResponse
 from django.template import loader
+
+from instagram_filters.flappy_bird import FlappyBird, gen
 
 
 def home(request):
@@ -13,6 +15,10 @@ def home(request):
 def flappy_bird(request):
     template = loader.get_template('flappy_bird.html')
     return HttpResponse(template.render({}, request))
+
+
+def stream_flappy_bird(request):
+    return StreamingHttpResponse(gen(FlappyBird()), content_type='multipart/x-mixed-replace; boundary=frame')
 
 
 def maths_equation(request):
