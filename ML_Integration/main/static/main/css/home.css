@@ -106,6 +106,10 @@ body {
     opacity: 0;
 }
 
+.iglink {
+    visibility: hidden;
+}
+
 .igsubshow {
     visibility: visible;
     opacity: 1;
