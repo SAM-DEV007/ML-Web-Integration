@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, StreamingHttpResponse
 from django.template import loader
 
-from instagram_filters.flappy_bird import FlappyBird, gen
+from instagram_filters.flappy_bird import flappy_gen
 
 
 def home(request):
@@ -14,11 +14,13 @@ def home(request):
 
 def flappy_bird(request):
     template = loader.get_template('flappy_bird.html')
-    return HttpResponse(template.render({}, request))
+    web = HttpResponse(template.render({}, request))
+    web.set_cookie('restart', 0)
+    return web
 
 
 def stream_flappy_bird(request):
-    return StreamingHttpResponse(gen(FlappyBird()), content_type='multipart/x-mixed-replace; boundary=frame')
+    return StreamingHttpResponse(flappy_gen(request), content_type='multipart/x-mixed-replace; boundary=frame')
 
 
 def maths_equation(request):
