@@ -5,7 +5,7 @@
     <head>
         <link rel="icon" href="{% static 'main/assets/Logo.jpg' %}">
         <link rel="stylesheet" href="{% static 'instagram_filters/css/hand_gesture.css' %}">
-        <title>Flappy Bird</title>
+        <title>Hand Gesture</title>
     </head>
     <body>
         <div class="main">
@@ -13,11 +13,11 @@
             <a id="ig" href="{% url 'instagram_filters:ig_home' %}"><h1 id="title">Instagram Filters</h1></a>
         </div>
         <div class="container">
-            <a id="subtitle_link" href="https://github.com/SAM-DEV007/Instagram-Filters" target="_blank"><h1 id="subtitle" title="Source code">Flappy Bird</h1></a>
+            <a id="subtitle_link" href="https://github.com/SAM-DEV007/Instagram-Filters/tree/main/Hand_Gesture" target="_blank"><h1 id="subtitle" title="Source code">Hand Gesture</h1></a>
             <h1 id="disclaimer">Disclaimer: The video dimensions are fixed to 640x480 px.</h1>
             <div id="video_main">
-                <img src="{% url 'instagram_filters:flappy_bird_feed' %}", alt="Video not found!", id="video">
-                <form><button type="submit" id="restart" name="restart" value="true" formaction="{% url 'instagram_filters:flappy_bird' %}">RESTART</button></form>
+                <img src="{% url 'instagram_filters:hand_gesture_feed' %}", alt="Video not found!", id="video">
+                <form><button type="submit" id="restart" name="restart" value="true" formaction="{% url 'instagram_filters:hand_gesture' %}">RESTART</button></form>
             </div>
         </div>
     </body>

@@ -3,6 +3,7 @@ from django.http import HttpResponse, StreamingHttpResponse
 from django.template import loader
 
 from instagram_filters.flappy_bird import flappy_gen
+from instagram_filters.hand_gesture import hand_gen
 
 
 def home(request):
@@ -29,3 +30,7 @@ def maths_equation(request):
 def hand_gesture(request):
     template = loader.get_template('hand_gesture.html')
     return HttpResponse(template.render({}, request))
+
+
+def stream_hand_gesture(request):
+    return StreamingHttpResponse(hand_gen(), content_type='multipart/x-mixed-replace; boundary=frame')
