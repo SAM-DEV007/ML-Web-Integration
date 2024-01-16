@@ -3,8 +3,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="{% static 'instagram_filters/js/home.js' %}"></script>
         <link rel="icon" href="{% static 'main/assets/Logo.jpg' %}">
         <link rel="stylesheet" href="{% static 'instagram_filters/css/flappy_bird.css' %}">
         <title>Flappy Bird</title>
@@ -19,7 +17,7 @@
             <h1 id="disclaimer">Disclaimer: The video dimensions are fixed to 640x480 px.</h1>
             <div id="video_main">
                 <img src="{% url 'instagram_filters:flappy_bird_feed' %}", alt="Video not found!", id="video">
-                <h1 id="restart">RESTART</h1>
+                <form><button type="submit" id="restart" name="restart" value="true" formaction="{% url 'instagram_filters:flappy_bird' %}">RESTART</button></form>
             </div>
         </div>
     </body>

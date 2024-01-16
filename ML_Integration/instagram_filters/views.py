@@ -14,13 +14,11 @@ def home(request):
 
 def flappy_bird(request):
     template = loader.get_template('flappy_bird.html')
-    web = HttpResponse(template.render({}, request))
-    web.set_cookie('restart', 0)
-    return web
+    return HttpResponse(template.render({}, request))
 
 
 def stream_flappy_bird(request):
-    return StreamingHttpResponse(flappy_gen(request), content_type='multipart/x-mixed-replace; boundary=frame')
+    return StreamingHttpResponse(flappy_gen(), content_type='multipart/x-mixed-replace; boundary=frame')
 
 
 def maths_equation(request):
