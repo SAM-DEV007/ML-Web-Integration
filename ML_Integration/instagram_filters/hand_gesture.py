@@ -21,7 +21,7 @@ def flappy_gen():
 
 
 class predict():
-    def __init__(self, model_path = settings.BASE_DIR / 'instagram_filters/HandGesture_Data/Model.tflite', num_threads = 1):
+    def __init__(self, model_path = settings.BASE_DIR / 'instagram_filters/HandGesture_Model/Model.tflite', num_threads = 1):
         self.interpreter = tf.lite.Interpreter(model_path = model_path, num_threads = num_threads)
 
         self.interpreter.allocate_tensors()
@@ -46,70 +46,70 @@ class predict():
 
 class HandGesture():
     def __init__(self):
-        cam = cv2.VideoCapture(0)
-        cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-        cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        self.cam = cv2.VideoCapture(0)
+        self.cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
-        show_palm = True
-        show_ok = True
-        show_peace = True
+        self.show_palm = True
+        self.show_ok = True
+        self.show_peace = True
 
-        img_busy = False
+        self.img_busy = False
 
-        model_db = 0
-        gesture = None
+        self.model_db = 0
+        self.gesture = None
 
-        mphands = mp.solutions.hands
-        hands = mphands.Hands()
+        self.mphands = mp.solutions.hands
+        self.hands = self.mphands.Hands()
 
-        model_predict = predict()
+        self.model_predict = predict()
 
-        mask_big_img = None
-        big_img = None
-        big_img_time = None
+        self.mask_big_img = None
+        self.big_img = None
+        self.big_img_time = None
 
-        mask_palm_img_holder = None
-        mask_ok_img_holder = None
-        mask_peace_img_holder = None
+        self.mask_palm_img_holder = None
+        self.mask_ok_img_holder = None
+        self.mask_peace_img_holder = None
 
-        palm_img_holder = None
-        ok_img_holder = None
-        peace_img_holder = None
+        self.palm_img_holder = None
+        self.ok_img_holder = None
+        self.peace_img_holder = None
 
-        temp_mask_palm_img_holder = None
-        temp_mask_ok_img_holder = None
-        temp_mask_peace_img_holder = None
+        self.temp_mask_palm_img_holder = None
+        self.temp_mask_ok_img_holder = None
+        self.temp_mask_peace_img_holder = None
 
-        temp_palm_img_holder = None
-        temp_ok_img_holder = None
-        temp_peace_img_holder = None
+        self.temp_palm_img_holder = None
+        self.temp_ok_img_holder = None
+        self.temp_peace_img_holder = None
 
-        img_size = 150
+        self.img_size = 150
 
-        palm_path = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))) + '\\Data\\', 'Palm.png')
-        ok_path = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))) + '\\Data\\', 'Ok.png')
-        peace_path = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))) + '\\Data\\', 'Peace.png')
+        self.palm_path = settings.BASE_DIR / 'instagram_filters/HandGesture_Data/Palm.png'
+        self.ok_path = settings.BASE_DIR / 'instagram_filters/HandGesture_Data/Ok.png'
+        self.peace_path = settings.BASE_DIR / 'instagram_filters/HandGesture_Data/Peace.png'
 
-        size = 100
+        self.size = 100
 
-        palm = cv2.imread(palm_path)
-        palm = cv2.resize(palm, (size, size))
-        mask_palm = mask(palm)
+        self.palm = cv2.imread(self.palm_path)
+        self.palm = cv2.resize(self.palm, (self.size, self.size))
+        self.mask_palm = self.mask(self.palm)
         
-        ok = cv2.imread(ok_path)
-        ok = cv2.resize(ok, (size, size))
-        mask_ok = mask(ok)
+        self.ok = cv2.imread(self.ok_path)
+        self.ok = cv2.resize(self.ok, (self.size, self.size))
+        self.mask_ok = self.mask(self.ok)
 
-        peace = cv2.imread(peace_path)
-        peace = cv2.resize(peace, (size, size))
-        mask_peace = mask(peace)
+        self.peace = cv2.imread(self.peace_path)
+        self.peace = cv2.resize(self.peace, (self.size, self.size))
+        self.mask_peace = self.mask(self.peace)
 
     
     def __del__(self):
         cv2.destroyAllWindows()
 
 
-    def landmark_list(image, landmarks):
+    def landmark_list(self, image, landmarks):
         '''Generates the landmark list'''
 
         image_width, image_height = image.shape[1], image.shape[0]
@@ -125,7 +125,7 @@ class HandGesture():
         return pre_process_data(landmark_point)
 
 
-    def pre_process_data(landmark_list):
+    def pre_process_data(self, landmark_list):
         '''Pre processes the data for the trained model'''
 
         temp_landmark_list = copy.deepcopy(landmark_list)
@@ -150,7 +150,7 @@ class HandGesture():
         return temp_landmark_list
 
 
-    def detect_hands(frame, hands, model_predict):
+    def detect_hands(self, frame, hands, model_predict):
         '''Detects the hand and returns the suitable gesture'''
 
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -169,7 +169,7 @@ class HandGesture():
         return gesture
 
 
-    def mask(img):
+    def mask(self, img):
         '''Masks the image'''
 
         img2gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -178,7 +178,7 @@ class HandGesture():
         return mask
 
 
-    def pre_img(frame, size, img, mask_img, gesture):
+    def pre_img(self, frame, size, img, mask_img, gesture):
         '''Initializes the hand img to the frame'''
 
         img_section = [-600, -360, -130]
@@ -190,7 +190,7 @@ class HandGesture():
         roi += img
 
 
-    def get_img(frame):
+    def get_img(self, frame):
         '''Gets the images after the gesture'''
 
         cv2.rectangle(frame, [130, 170], [510, 450], (0, 0, 0), 2)
@@ -207,7 +207,7 @@ class HandGesture():
         return img
 
 
-    def hold_img_main(frame, img, mask_img):
+    def hold_img_main(self, frame, img, mask_img):
         '''Holds the img on the screen for a while'''
 
         roi = frame[149: 472, 109: 532]
@@ -216,7 +216,7 @@ class HandGesture():
         roi += img
 
 
-    def change_img(frame, img, mask_img, gesture: int, img_size: int):
+    def change_img(self, frame, img, mask_img, gesture: int, img_size: int):
         '''Changes the gesture image'''
 
         img_section = [-600, -400, -200]
@@ -228,85 +228,85 @@ class HandGesture():
         roi += img
 
 
-    def main():
+    def main(self):
         '''The main function to start the filter'''
 
-        _, frame = cam.read() 
-        frame = cv2.flip(frame, 1) 
+        _, self.frame = self.cam.read() 
+        self.frame = cv2.flip(self.frame, 1) 
 
-        if show_palm: pre_img(frame, size, palm, mask_palm, 0)
-        else: change_img(frame, palm_img_holder, mask_palm_img_holder, 0, img_size)
-        if show_ok: pre_img(frame, size, ok, mask_ok, 1)
-        else: change_img(frame, ok_img_holder, mask_ok_img_holder, 1, img_size)
-        if show_peace: pre_img(frame, size, peace, mask_peace, 2)
-        else: change_img(frame, peace_img_holder, mask_peace_img_holder, 2, img_size)
+        if self.show_palm: self.pre_img(self.frame, self.size, self.palm, self.mask_palm, 0)
+        else: self.change_img(self.frame, self.palm_img_holder, self.mask_palm_img_holder, 0, self.img_size)
+        if self.show_ok: self.pre_img(self.frame, self.size, self.ok, self.mask_ok, 1)
+        else: self.change_img(self.frame, self.ok_img_holder, self.mask_ok_img_holder, 1, self.img_size)
+        if self.show_peace: self.pre_img(self.frame, self.size, self.peace, self.mask_peace, 2)
+        else: self.change_img(self.frame, self.peace_img_holder, self.mask_peace_img_holder, 2, self.img_size)
 
-        if big_img is not None:
-            if (time.time() - big_img_time) > 1.5:
+        if self.big_img is not None:
+            if (time.time() - self.big_img_time) > 1.5:
                 
-                img_busy = False
-                model_db = 0
-                big_img_time = None
-                big_img = None
-                mask_big_img = None
+                self.img_busy = False
+                self.model_db = 0
+                self.big_img_time = None
+                self.big_img = None
+                self.mask_big_img = None
             else:
-                hold_img_main(frame, big_img, mask_big_img) 
+                self.hold_img_main(self.frame, self.big_img, self.mask_big_img) 
         
-        if big_img is None:
-            if temp_palm_img_holder is not None:
-                palm_img_holder = temp_palm_img_holder
-                mask_palm_img_holder = temp_mask_palm_img_holder
+        if self.big_img is None:
+            if self.temp_palm_img_holder is not None:
+                self.palm_img_holder = self.temp_palm_img_holder
+                self.mask_palm_img_holder = self.temp_mask_palm_img_holder
 
-                temp_mask_palm_img_holder = None
-                temp_palm_img_holder = None
-                show_palm = False
+                self.temp_mask_palm_img_holder = None
+                self.temp_palm_img_holder = None
+                self.show_palm = False
 
-            if temp_ok_img_holder is not None:
-                ok_img_holder = temp_ok_img_holder
-                mask_ok_img_holder = temp_mask_ok_img_holder
+            if self.temp_ok_img_holder is not None:
+                self.ok_img_holder = self.temp_ok_img_holder
+                self.mask_ok_img_holder = self.temp_mask_ok_img_holder
                 
-                temp_mask_ok_img_holder = None
-                temp_ok_img_holder = None
-                show_ok = False
+                self.temp_mask_ok_img_holder = None
+                self.temp_ok_img_holder = None
+                self.show_ok = False
 
-            if temp_peace_img_holder is not None:
-                peace_img_holder = temp_peace_img_holder
-                mask_peace_img_holder = temp_mask_peace_img_holder
+            if self.temp_peace_img_holder is not None:
+                self.peace_img_holder = self.temp_peace_img_holder
+                self.mask_peace_img_holder = self.temp_mask_peace_img_holder
 
-                temp_mask_peace_img_holder = None
-                temp_peace_img_holder = None
-                show_peace = False
+                self.temp_mask_peace_img_holder = None
+                self.temp_peace_img_holder = None
+                self.show_peace = False
         
-        if not model_db: model_db = time.time()
+        if not self.model_db: self.model_db = time.time()
         
-        if not img_busy:
-            gesture = detect_hands(frame[165: 480, 0: 640], hands, model_predict)
+        if not self.img_busy:
+            self.gesture = self.detect_hands(self.frame[165: 480, 0: 640], self.hands, self.model_predict)
 
-        if gesture is not None and (time.time() - model_db) > 1 and not img_busy:
-            img_busy = True 
-            temp_frame = copy.deepcopy(frame) 
+        if self.gesture is not None and (time.time() - self.model_db) > 1 and not self.img_busy:
+            self.img_busy = True 
+            self.temp_frame = copy.deepcopy(self.frame) 
 
-            img = get_img(temp_frame) 
-            img = cv2.detailEnhance(img, sigma_r=0.15, sigma_s=3) 
+            self.img = self.get_img(self.temp_frame) 
+            self.img = cv2.detailEnhance(self.img, sigma_r=0.15, sigma_s=3) 
             
-            m = mask(img)
-            hold_img_main(frame, img, m)
+            self.m = self.mask(self.img)
+            self.hold_img_main(self.frame, self.img, self.m)
 
-            big_img_time = time.time()
-            big_img = img
-            mask_big_img = m
+            self.big_img_time = time.time()
+            self.big_img = self.img
+            self.mask_big_img = self.m
             
-            img = cv2.resize(img, (img_size, img_size)) 
-            if gesture == 0: 
-                temp_palm_img_holder = img
-                temp_mask_palm_img_holder = mask(img)
-            elif gesture == 1: 
-                temp_ok_img_holder = img
-                temp_mask_ok_img_holder = mask(img)
-            elif gesture == 2:
-                temp_peace_img_holder = img
-                temp_mask_peace_img_holder = mask(img)
-            gesture = None
+            self.img = cv2.resize(self.img, (self.img_size, self.img_size)) 
+            if self.gesture == 0: 
+                self.temp_palm_img_holder = self.img
+                self.temp_mask_palm_img_holder = self.mask(self.img)
+            elif self.gesture == 1: 
+                self.temp_ok_img_holder = self.img
+                self.temp_mask_ok_img_holder = self.mask(self.img)
+            elif self.gesture == 2:
+                self.temp_peace_img_holder = self.img
+                self.temp_mask_peace_img_holder = self.mask(self.img)
+            self.gesture = None
 
         _, jpeg = cv2.imencode('.jpg', self.frame)
         return jpeg.tobytes()
