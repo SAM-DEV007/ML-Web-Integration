@@ -21,7 +21,7 @@ def hand_gen():
 
 
 class predict():
-    def __init__(self, model_path = settings.BASE_DIR / 'instagram_filters/HandGesture_Model/Model.tflite', num_threads = 1):
+    def __init__(self, model_path = str(settings.BASE_DIR / 'instagram_filters/HandGesture_Model/Model.tflite'), num_threads = 1):
         self.interpreter = tf.lite.Interpreter(model_path = model_path, num_threads = num_threads)
 
         self.interpreter.allocate_tensors()
@@ -86,9 +86,9 @@ class HandGesture():
 
         self.img_size = 150
 
-        self.palm_path = settings.BASE_DIR / 'instagram_filters/HandGesture_Data/Palm.png'
-        self.ok_path = settings.BASE_DIR / 'instagram_filters/HandGesture_Data/Ok.png'
-        self.peace_path = settings.BASE_DIR / 'instagram_filters/HandGesture_Data/Peace.png'
+        self.palm_path = str(settings.BASE_DIR / 'instagram_filters/HandGesture_Data/Palm.png')
+        self.ok_path = str(settings.BASE_DIR / 'instagram_filters/HandGesture_Data/Ok.png')
+        self.peace_path = str(settings.BASE_DIR / 'instagram_filters/HandGesture_Data/Peace.png')
 
         self.size = 100
 
@@ -122,7 +122,7 @@ class HandGesture():
 
             landmark_point.append([landmark_x, landmark_y])
 
-        return pre_process_data(landmark_point)
+        return self.pre_process_data(landmark_point)
 
 
     def pre_process_data(self, landmark_list):
@@ -162,7 +162,7 @@ class HandGesture():
         if hand_landmarks:
             for handLMs in hand_landmarks:
                 if handLMs:
-                    landmark = landmark_list(frame, handLMs)
+                    landmark = self.landmark_list(frame, handLMs)
                     gesture = model_predict(landmark)
         
         if gesture == 3: gesture = None
