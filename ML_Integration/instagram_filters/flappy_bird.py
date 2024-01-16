@@ -59,8 +59,8 @@ class FlappyBird():
 
         self.buffer = time.time()
 
-        self.flappy_path =  settings.BASE_DIR / 'instagram_filters/FlappyBird_Data/Flappy Bird.png'
-        self.pillar_path =  settings.BASE_DIR / 'instagram_filters/FlappyBird_Data/Pillar.png'
+        self.flappy_path =  str(settings.BASE_DIR / 'instagram_filters/FlappyBird_Data/Flappy Bird.png')
+        self.pillar_path =  str(settings.BASE_DIR / 'instagram_filters/FlappyBird_Data/Pillar.png')
 
         self.flappy = cv2.imread(self.flappy_path)
         self.flappy = cv2.resize(self.flappy, (self.flappy_size, self.flappy_size))
@@ -112,7 +112,7 @@ class FlappyBird():
         self.face_frame = copy.deepcopy(self.frame)
 
         self.face_frame = cv2.cvtColor(self.face_frame, cv2.COLOR_BGR2RGB)
-        self.face = face_detection.process(self.face_frame)
+        self.face = self.face_detection.process(self.face_frame)
 
         if self.pv_list[self.pillar_val-1] <= 350 and self.fl:
             self.pillar_val += 1
