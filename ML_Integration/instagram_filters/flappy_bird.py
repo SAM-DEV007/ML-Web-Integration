@@ -11,9 +11,12 @@ import numpy as np
 from django.conf import settings
 
 
-def flappy_gen(restart=0):
+def flappy_gen(request):
+    restart = 0
     obj = FlappyBird()
+    
     while True:
+        restart = request.COOKIES.get('restart')
         if restart == 1:
             obj = FlappyBird()
             restart = 0
