@@ -36,6 +36,9 @@ body {
     margin-left: 115.8px;
     margin-top: -20px;
     cursor: pointer;
+}
+
+#subtitle_link{
     text-decoration: none;
 }
 
