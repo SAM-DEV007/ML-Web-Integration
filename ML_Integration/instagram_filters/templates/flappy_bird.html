@@ -9,14 +9,15 @@
     </head>
     <body>
         <div class="main">
-            <img id="logo" src="{% static 'main/assets/Logo.jpg' %}" alt="Logo">
-            <h1 id="title">Instagram Filters</h1>
+            <a href="{% url 'main:main' %}"><img id="logo" src="{% static 'main/assets/Logo.jpg' %}" alt="Logo"></a>
+            <a id="ig" href="{% url 'instagram_filters:ig_home' %}"><h1 id="title">Instagram Filters</h1></a>
         </div>
         <div class="container">
-            <h1 id="subtitle">Flappy Bird</h1>
+            <h1 id="subtitle" title="Source code">Flappy Bird</h1>
             <h1 id="disclaimer">Disclaimer: The video dimensions are fixed to 640x480 px.</h1>
             <div id="video_main">
                 <img src="{% url 'instagram_filters:flappy_bird_feed' %}", alt="Video not found!", id="video">
+                <h1 id="restart">RESTART</h1>
             </div>
         </div>
     </body>

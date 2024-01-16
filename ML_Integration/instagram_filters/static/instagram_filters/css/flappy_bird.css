@@ -24,12 +24,18 @@ body {
     cursor: pointer;
 }
 
+#ig {
+    color: white;
+    text-decoration: none;
+}
+
 #subtitle {
     font-family: 'Quicksand', sans-serif;
     font-size: 1rem;
     color: yellow;
     margin-left: 115.8px;
     margin-top: -20px;
+    cursor: pointer;
 }
 
 #disclaimer {
@@ -59,4 +65,15 @@ body {
     color: white;
     width: 640px;
     height: 480px;
+}
+
+#restart {
+    border: 1px solid white;
+    border-radius: 30px;
+    padding: 5px;
+    padding-bottom: 5px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.3rem;
+    color: white;
+    cursor: pointer;
 }
