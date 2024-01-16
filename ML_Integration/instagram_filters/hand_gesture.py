@@ -11,7 +11,7 @@ import os
 import time
 
 
-def flappy_gen():
+def hand_gen():
     obj = HandGesture()
 
     while True:
