@@ -172,8 +172,8 @@ class MathsEquation():
                 if correct_op_direction == -1: left_op, right_op = self.generate_options(curr_ques, curr_ans)
                 else: right_op, left_op = self.generate_options(curr_ques, curr_ans)
 
-            put_text(frame, curr_ques, x, y, w, h, color_val[1])
-            put_text_options(frame, x, y, w, direction, left_op, right_op)
+            self.put_text(frame, curr_ques, x, y, w, h, color_val[1])
+            self.put_text_options(frame, x, y, w, direction, left_op, right_op)
 
         return first_launch, ans, ans_corr, get_dir, left_op, right_op, question_asked, correct_op_direction, broadcast_corr, broadcast_incorr
 
@@ -189,7 +189,7 @@ class MathsEquation():
                 if not self.end_time:
                     self.end_time = time.time()
                 if time.time() - self.end_time > 5:
-                    break
+                    pass
 
         _, self.frame = self.vid.read()
         self.frame = cv2.flip(self.frame, 1)
