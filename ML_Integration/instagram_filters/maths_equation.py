@@ -6,30 +6,6 @@ import os
 import time
 
 
-def check_dir():
-    '''Checks if the Captured Video directory exists'''
-
-    path = os.path.abspath(os.path.join(os.path.dirname(__file__))) + '\\Captured Video\\'
-    if not os.path.exists(path):
-        os.makedirs(path)
-
-
-def get_num() -> int:
-    '''Gets the no. of the last recorded file'''
-
-    num = -1
-
-    for file in os.listdir(os.path.abspath(os.path.join(os.path.dirname(__file__))) + '\\Captured Video\\'):
-        if os.path.splitext(file)[-1] == '.mp4':
-            if 'record_' in file:
-                file = file.replace('.mp4', '')
-                t_num = int(file.split('_')[1])
-                if t_num > num:
-                    num = t_num
-    
-    return num
-
-
 def generate() -> dict:
     '''Generates dictionary containing the maths equation with answer'''
 
@@ -156,8 +132,8 @@ def main():
     '''The main function for starting the program'''
 
     vid = cv2.VideoCapture(0)
-    vid.set(cv2.CAP_PROP_BUFFERSIZE, 2)
-    vid_cod = cv2.VideoWriter_fourcc(*'mp4v')
+    vid.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
     hide = False
     get_dir = False
@@ -171,12 +147,6 @@ def main():
 
     first_launch_time = time.time()
     curr = time.time()
-
-    check_dir()
-    i = get_num()
-    fps = 20
-    save_path = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))) + '\\Captured Video\\', f'record_{i+1}.mp4')
-    output = cv2.VideoWriter(save_path, vid_cod, fps, (640,480))
 
     face_cascade_path = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))) + '\\Data\\', 'frontface_default.xml')
     face_cascade = cv2.CascadeClassifier(face_cascade_path)
@@ -254,24 +224,3 @@ def main():
                         question_asked = False
 
                 curr = time.time()
-
-        cv2.imshow('Cam', frame)
-        output.write(frame)
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-        if cv2.waitKey(1) == 27:
-            break
-
-        if cv2.getWindowProperty('Cam', cv2.WND_PROP_VISIBLE) < 1:
-            break
-
-
-    vid.release()
-    output.release()
-    cv2.destroyAllWindows()
-
-
-if __name__ == '__main__':
-    main()
