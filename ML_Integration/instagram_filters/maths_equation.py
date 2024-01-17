@@ -33,14 +33,9 @@ def get_num() -> int:
 def generate() -> dict:
     '''Generates dictionary containing the maths equation with answer'''
 
-    # Signs and Placeholders
     sign = ['+', '-', '*', '/']
     placeholder = ['+', '-', 'x', '/']
 
-    #placeholder = ['+', '-', '×', '÷']
-    # cv2.putText() does not support non-ascii characters yet (atleast in this version)
-
-    # Equations Dictionary
     dict_eq = dict()
 
     for _ in range(5):
@@ -48,7 +43,6 @@ def generate() -> dict:
         random_step = random.randint(1, 2)
         n = 30
 
-        # Creates the Equation
         for j in range(random_step+1):
             num = random.randint(1, n)
             if eq:
@@ -59,8 +53,7 @@ def generate() -> dict:
                 eq += f' {str(r_num)}'
                 continue
             eq += str(num)
-        
-        # Separates the equation and the answer
+
         pl = ''
         for t in eq:
             if t in sign:
@@ -101,8 +94,8 @@ def generate_options(curr_ques: str, curr_ans: int):
 def put_text_options(frame, x: int, y: int, w: int, direction: int, left_op: int, right_op: int):
     '''Adds options in the Quiz Area'''
 
-    cv2.putText(frame, left_op, (x - w + 10, y), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255, 255, 255), 2, cv2.LINE_AA) # Option 1
-    cv2.putText(frame, right_op, (x + (2 * w) - (18 * len(right_op)), y), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255, 255, 255), 2, cv2.LINE_AA) # Option 2
+    cv2.putText(frame, left_op, (x - w + 10, y), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255, 255, 255), 2, cv2.LINE_AA)
+    cv2.putText(frame, right_op, (x + (2 * w) - (18 * len(right_op)), y), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255, 255, 255), 2, cv2.LINE_AA)
 
 
 def put_text(frame, txt: str, x: int, y: int, w: int, h: int, color: tuple):
@@ -110,7 +103,7 @@ def put_text(frame, txt: str, x: int, y: int, w: int, h: int, color: tuple):
 
     t_x = (((x - w) + (x + (2 * w))) // 2)
     t_y = (((y + 20) + (y - h + 20)) // 2)
-    cv2.putText(frame, txt, (t_x - (len(txt) * 9), t_y), cv2.FONT_HERSHEY_COMPLEX, 1, color, 2, cv2.LINE_AA) # Puts question text
+    cv2.putText(frame, txt, (t_x - (len(txt) * 9), t_y), cv2.FONT_HERSHEY_COMPLEX, 1, color, 2, cv2.LINE_AA)
 
 
 def add_quiz_area(frame, x: int, y: int, w: int, h: int, color_val: list, first_launch: bool, first_launch_time, d_ques: list, d_ans: list, ans: int, ans_corr: int, direction: int, question_asked: bool, left_op: str, right_op: str, correct_op_direction: int, broadcast_corr: bool, broadcast_incorr: bool, last: bool, end: bool):
@@ -118,7 +111,7 @@ def add_quiz_area(frame, x: int, y: int, w: int, h: int, color_val: list, first_
 
     get_dir = False
 
-    if not broadcast_corr and not broadcast_incorr: cv2.rectangle(frame, (x - w, y + 20), (x + (2 * w), y - h + 20), color_val[0], -1) # Question
+    if not broadcast_corr and not broadcast_incorr: cv2.rectangle(frame, (x - w, y + 20), (x + (2 * w), y - h + 20), color_val[0], -1)
     elif broadcast_corr:
         cv2.rectangle(frame, (x - w, y + 20), (x + (2 * w), y - h + 20), color_val[2], -1)
         broadcast_corr = False
@@ -126,7 +119,7 @@ def add_quiz_area(frame, x: int, y: int, w: int, h: int, color_val: list, first_
         cv2.rectangle(frame, (x - w, y + 20), (x + (2 * w), y - h + 20), color_val[3], -1)
         broadcast_incorr = False
 
-    cv2.rectangle(frame, (x - w, y + 20), (x + (2 * w), y - h + 20), (255, 255, 255)) # Border
+    cv2.rectangle(frame, (x - w, y + 20), (x + (2 * w), y - h + 20), (255, 255, 255))
 
     if (time.time() - first_launch_time) > 5:
         first_launch = False
@@ -148,15 +141,13 @@ def add_quiz_area(frame, x: int, y: int, w: int, h: int, color_val: list, first_
         if not question_asked and not last:
             question_asked = True
 
-            # -1  -> Left
-            #  1  -> Right
             correct_op_direction = random.sample([-1, 1], k=1)[0]
 
             if correct_op_direction == -1: left_op, right_op = generate_options(curr_ques, curr_ans)
             else: right_op, left_op = generate_options(curr_ques, curr_ans)
 
-        put_text(frame, curr_ques, x, y, w, h, color_val[1]) # Adds question
-        put_text_options(frame, x, y, w, direction, left_op, right_op) # Adds options
+        put_text(frame, curr_ques, x, y, w, h, color_val[1])
+        put_text_options(frame, x, y, w, direction, left_op, right_op)
 
     return first_launch, ans, ans_corr, get_dir, left_op, right_op, question_asked, correct_op_direction, broadcast_corr, broadcast_incorr
 
@@ -164,10 +155,9 @@ def add_quiz_area(frame, x: int, y: int, w: int, h: int, color_val: list, first_
 def main():
     '''The main function for starting the program'''
 
-    # Default Variables
-    vid = cv2.VideoCapture(0) # Uses webcam
+    vid = cv2.VideoCapture(0)
     vid.set(cv2.CAP_PROP_BUFFERSIZE, 2)
-    vid_cod = cv2.VideoWriter_fourcc(*'mp4v') # .mp4
+    vid_cod = cv2.VideoWriter_fourcc(*'mp4v')
 
     hide = False
     get_dir = False
@@ -182,7 +172,7 @@ def main():
     first_launch_time = time.time()
     curr = time.time()
 
-    check_dir() # Checks for the directory
+    check_dir()
     i = get_num()
     fps = 20
     save_path = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))) + '\\Captured Video\\', f'record_{i+1}.mp4')
@@ -191,7 +181,7 @@ def main():
     face_cascade_path = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))) + '\\Data\\', 'frontface_default.xml')
     face_cascade = cv2.CascadeClassifier(face_cascade_path)
 
-    dict_eq = generate() # Generates the equation dictionary
+    dict_eq = generate()
     d_ques = list(dict_eq.keys())
     d_ans = list(dict_eq.values())
 
@@ -206,32 +196,28 @@ def main():
     correct_op_direction = 0
 
     while True:
-        # Checks if the questions are over
         if ans > (len(dict_eq) - 1):
             if not last: last = True
             else:
                 end = True
-                #_, _, _, _, _, _, _, _, _, _ = add_quiz_area(frame, x, y, w, h, color_val, first_launch, first_launch_time, d_ques, d_ans, ans, ans_corr, direction, question_asked, left_op, right_op, correct_op_direction, broadcast_corr, broadcast_incorr, last, end)
+
                 if not end_time:
                     end_time = time.time()
                 if time.time() - end_time > 5:
                     break
 
-        # Opens the webcam
         _, frame = vid.read()
-        frame = cv2.flip(frame, 1) # Flips the camera
+        frame = cv2.flip(frame, 1)
 
-        # Face Detection
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         face = face_cascade.detectMultiScale(gray, 1.1, 5)
 
-        # Draws rectangle
         prev_left, prev_right = x, x + w
 
-        color = (0, 0, 0) # Background color
-        text_color = (255, 255, 255) # Text color
-        correct_color = (0, 255, 0) # Correct background color
-        incorrect_color = (0, 0, 255) # Incorrect background color
+        color = (0, 0, 0)
+        text_color = (255, 255, 255)
+        correct_color = (0, 255, 0)
+        incorrect_color = (0, 0, 255)
 
         color_val = [color, text_color, correct_color, incorrect_color]
 
@@ -241,7 +227,7 @@ def main():
 
                 prev = time.time()
                 if (prev - curr) > 1:
-                    hide = True # Hides the quiz area
+                    hide = True
         else:
             if hide: hide = False
             else:
@@ -249,10 +235,7 @@ def main():
                 first_launch, ans, ans_corr, get_dir, left_op, right_op, question_asked, correct_op_direction, broadcast_corr, broadcast_incorr = add_quiz_area(frame, x, y, w, h, color_val, first_launch, first_launch_time, d_ques, d_ans, ans, ans_corr, direction, question_asked, left_op, right_op, correct_op_direction, broadcast_corr, broadcast_incorr, last, end)
 
                 if get_dir:
-                    #  0  -> Straight
-                    #  1  -> Right
-                    # -1  -> Left
-                    direction = get_direction(prev_left, prev_right, x, w) # Gets alignment
+                    direction = get_direction(prev_left, prev_right, x, w)
                     get_dir = False
                 
                 if direction and question_asked:
@@ -270,22 +253,17 @@ def main():
                         ans += 1
                         question_asked = False
 
-                curr = time.time() # Gets and updates the time
+                curr = time.time()
 
-        # Shows and records the video
         cv2.imshow('Cam', frame)
         output.write(frame)
 
-        # Closes the window
-        # Q button
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-        # Esc button
         if cv2.waitKey(1) == 27:
             break
 
-        # X button on the top of the window
         if cv2.getWindowProperty('Cam', cv2.WND_PROP_VISIBLE) < 1:
             break
 
