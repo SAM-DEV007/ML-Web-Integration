@@ -4,6 +4,7 @@ from django.template import loader
 
 from instagram_filters.flappy_bird import flappy_gen
 from instagram_filters.hand_gesture import hand_gen
+from instagram_filters.maths_equation import maths_gen
 
 
 def home(request):
@@ -25,6 +26,10 @@ def stream_flappy_bird(request):
 def maths_equation(request):
     template = loader.get_template('maths_equation.html')
     return HttpResponse(template.render({}, request))
+
+
+def stream_maths_equation(request):
+    return StreamingHttpResponse(maths_gen(), content_type='multipart/x-mixed-replace; boundary=frame')
 
 
 def hand_gesture(request):
