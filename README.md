@@ -1,4 +1,16 @@
-# ML-Web_integration
+# ML-Web-Integration
 Web integration of ML projects
 
-Work in progress...
+# About
+Website link: *Pending deployment*
+
+The backend is written in Python based on Django. The website aims to feature most of the Machine Learning projects done by me and stack them in one place.
+
+The repositories of the projects included:
+- [Instagram Filters](https://github.com/SAM-DEV007/Instagram-Filters)
+
+# Installation
+- Python 3.x version.
+- [requirements.txt](https://github.com/SAM-DEV007/ML-Web-Integration/blob/main/ML_Integration/requirements.txt) for the dependencies.
+  
+Followed by Django commands to setup and start the server.
