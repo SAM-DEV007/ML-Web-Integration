@@ -8,6 +8,9 @@ import time
 import mediapipe as mp
 import numpy as np
 
+from urllib.request import urlopen
+from instagram_filters import storage
+
 from django.conf import settings
 
 
@@ -16,18 +19,23 @@ def flappy_gen():
 
     while True:
         frame = obj.main()
-        yield (b'--frame\r\n'
-				b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        if frame is not None:
+            yield (b'--frame\r\n'
+                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        else: yield frame
 
 
 class FlappyBird():
     def __init__(self):
+        '''
         self.vid = cv2.VideoCapture(0)
         self.vid.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
         self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
         _, self.frame = self.vid.read()
-        self.h, self.w, _ = self.frame.shape
+        '''
+        #self.h, self.w, _ = self.frame.shape
+        self.h, self.w = 480, 640
 
         self.mp_face_detection = mp.solutions.face_detection
         self.face_detection = mp.solutions.face_detection.FaceDetection()
@@ -108,8 +116,18 @@ class FlappyBird():
     def main(self):
         if (time.time() - self.buffer) > 3: self.start = True
 
-        _, self.frame = self.vid.read()
+        if storage.FLAPPY_PATH is None: 
+            return
+
+        #_, self.frame = self.vid.read()
+        req = urlopen(storage.FLAPPY_PATH)
+        arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
+
+        self.frame = cv2.cvtColor(cv2.imdecode(arr, -1), cv2.COLOR_BGRA2BGR)
         self.frame = cv2.flip(self.frame, 1)
+
+        if self.frame.shape[0] != 480 or self.frame.shape[1] != 640: 
+            return
 
         self.face_frame = copy.deepcopy(self.frame)
 
