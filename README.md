@@ -2,7 +2,8 @@
 Web integration of ML projects
 
 # About
-Website link: *Pending deployment*
+Website link: https://ml-integrations.onrender.com/
+****Warning: The website is hosted on a free service platform with limited resources. The website may hang or crash. To fully experience the website, it is recommended to clone the repository and use localhost.***
 
 The backend is written in Python based on Django. The website aims to feature most of the Machine Learning projects done by me and stack them in one place.
 
