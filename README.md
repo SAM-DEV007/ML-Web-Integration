@@ -11,6 +11,6 @@ The repositories of the projects included:
 
 # Installation
 - Python 3.x version.
-- [requirements.txt](https://github.com/SAM-DEV007/ML-Web-Integration/blob/main/ML_Integration/requirements.txt) for the dependencies.
+- `requirements.txt` for the dependencies.
   
 Followed by Django commands to setup and start the server.
