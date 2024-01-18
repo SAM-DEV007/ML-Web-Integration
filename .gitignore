@@ -160,7 +160,7 @@ cython_debug/
 #.idea/
 
 # Django staticfiles
-ML_Integration/staticfiles/
+staticfiles/
 
 # Web Development files
 Web_Dev/
