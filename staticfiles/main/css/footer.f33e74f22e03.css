@@ -1,0 +1,19 @@
+body {
+    margin: 38.8px;
+    margin-bottom: 0px;
+    background-color: black;
+    min-height: 737.2px;
+    display: flex;
+    flex-direction: column;
+}
+
+#footer{
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+    color: white;
+}
+
+#github_footer {
+    color: whitesmoke;
+}

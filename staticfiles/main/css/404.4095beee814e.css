@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+
+body {
+    background-color: black;
+}
+
+#robot {
+    height: 388px;
+    width: 465.6px;
+}
+
+#img404 {
+    height: 77.6px;
+    width: 77.6px;
+}
+
+#img404:hover {
+    cursor: pointer;
+}
+
+#header {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 3.5rem;
+    color: white;
+    margin-top: 77.6px;
+}
+
+#para1 {
+    font-family: 'Courier New', Courier;
+    font-size: 1.5rem;
+    color: white;
+    margin-top: 23.28px;
+}
+
+#para2 {
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    color: white;
+    margin-top: 7.76px;
+}
+
+#home_link {
+    text-decoration: underline;
+    color: white;
+}
+
+.container {
+    display: flex;
+    min-height: calc(100vh - 270px);
+}
