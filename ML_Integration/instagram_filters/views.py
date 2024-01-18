@@ -23,10 +23,10 @@ def flappy_bird(request):
     return HttpResponse(template.render({}, request))
 
 
-def path_flappy(request):
+def img_path(request):
     if request.method == 'POST':
         path = request.POST.get('webimg')
-        storage.FLAPPY_PATH = path
+        storage.IMG_PATH = path
 
         return HttpResponse('Path set')
     return HttpResponse('Path not set')

@@ -1,1 +1,1 @@
-FLAPPY_PATH = None
+IMG_PATH = None

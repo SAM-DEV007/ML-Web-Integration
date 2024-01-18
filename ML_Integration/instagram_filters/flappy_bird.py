@@ -116,11 +116,11 @@ class FlappyBird():
     def main(self):
         if (time.time() - self.buffer) > 3: self.start = True
 
-        if storage.FLAPPY_PATH is None: 
+        if storage.IMG_PATH is None: 
             return
 
         #_, self.frame = self.vid.read()
-        req = urlopen(storage.FLAPPY_PATH)
+        req = urlopen(storage.IMG_PATH)
         arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
 
         self.frame = cv2.cvtColor(cv2.imdecode(arr, -1), cv2.COLOR_BGRA2BGR)
