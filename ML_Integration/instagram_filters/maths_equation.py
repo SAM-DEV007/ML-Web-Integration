@@ -1,9 +1,13 @@
 from django.conf import settings
 
+from urllib.request import urlopen
+from instagram_filters import storage
+
 import random
 import cv2
 import os
 import time
+import numpy as np
 
 
 def maths_gen():
@@ -11,15 +15,19 @@ def maths_gen():
 
     while True:
         frame = obj.main()
-        yield (b'--frame\r\n'
-				b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        if frame is not None:
+            yield (b'--frame\r\n'
+                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        else: yield frame
 
 
 class MathsEquation():
     def __init__(self):
+        '''
         self.vid = cv2.VideoCapture(0)
         self.vid.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
         self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        '''
 
         self.hide = False
         self.get_dir = False
@@ -181,6 +189,9 @@ class MathsEquation():
     def main(self):
         '''The main function for starting the program'''
 
+        if storage.IMG_PATH is None: 
+            return
+
         if self.ans > (len(self.dict_eq) - 1):
             if not self.last: self.last = True
             else:
@@ -191,8 +202,15 @@ class MathsEquation():
                 if time.time() - self.end_time > 5:
                     pass
 
-        _, self.frame = self.vid.read()
+        #_, self.frame = self.vid.read()
+        req = urlopen(storage.IMG_PATH)
+        arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
+
+        self.frame = cv2.cvtColor(cv2.imdecode(arr, -1), cv2.COLOR_BGRA2BGR)
         self.frame = cv2.flip(self.frame, 1)
+
+        if self.frame.shape[0] != 480 or self.frame.shape[1] != 640: 
+            return
 
         self.gray = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
         self.face = self.face_cascade.detectMultiScale(self.gray, 1.1, 5)

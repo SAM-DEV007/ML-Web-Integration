@@ -3,8 +3,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="{% static 'instagram_filters/js/client_video.js' %}"></script>
         <link rel="icon" href="{% static 'main/assets/Logo.jpg' %}">
-        <link rel="stylesheet" href="{% static 'instagram_filters/css/hand_gesture.css' %}">
+        <link rel="stylesheet" href="{% static 'instagram_filters/css/master.css' %}">
         <title>Hand Gesture</title>
     </head>
     <body>
@@ -17,7 +19,14 @@
             <h1 id="disclaimer">Disclaimer: The video dimensions are fixed to 640x480 px.</h1>
             <div id="video_main">
                 <img src="{% url 'instagram_filters:hand_gesture_feed' %}", alt="Video not found!", id="video">
-                <form><button type="submit" id="restart" name="restart" value="true" formaction="{% url 'instagram_filters:hand_gesture' %}">RESTART</button></form>
+                <form>{% csrf_token %}<button type="submit" id="restart" name="restart" value="true" formaction="{% url 'instagram_filters:hand_gesture' %}">RESTART</button></form>
+                <input id="urlpost" value="{% url 'instagram_filters:image_path' %}" type=hidden readonly>
+                <form id="vid" method="POST" name="video_form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <video id="tempvid" hidden></video>
+                    <input id="webimg" value="" name="img_path" type="hidden">
+                    <canvas id="canvas" hidden></canvas>
+                </form>
             </div>
         </div>
     </body>

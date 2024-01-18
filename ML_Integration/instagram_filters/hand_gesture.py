@@ -1,5 +1,8 @@
 from django.conf import settings
 
+from urllib.request import urlopen
+from instagram_filters import storage
+
 import mediapipe as mp
 import numpy as np
 import tensorflow as tf
@@ -16,8 +19,10 @@ def hand_gen():
 
     while True:
         frame = obj.main()
-        yield (b'--frame\r\n'
-				b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        if frame is not None:
+            yield (b'--frame\r\n'
+                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        else: yield frame
 
 
 class predict():
@@ -46,9 +51,11 @@ class predict():
 
 class HandGesture():
     def __init__(self):
+        '''
         self.cam = cv2.VideoCapture(0)
         self.cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
         self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        '''
 
         self.show_palm = True
         self.show_ok = True
@@ -231,8 +238,18 @@ class HandGesture():
     def main(self):
         '''The main function to start the filter'''
 
-        _, self.frame = self.cam.read() 
-        self.frame = cv2.flip(self.frame, 1) 
+        if storage.IMG_PATH is None: 
+            return
+
+        #_, self.frame = self.cam.read() 
+        req = urlopen(storage.IMG_PATH)
+        arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
+
+        self.frame = cv2.cvtColor(cv2.imdecode(arr, -1), cv2.COLOR_BGRA2BGR)
+        self.frame = cv2.flip(self.frame, 1)
+
+        if self.frame.shape[0] != 480 or self.frame.shape[1] != 640: 
+            return
 
         if self.show_palm: self.pre_img(self.frame, self.size, self.palm, self.mask_palm, 0)
         else: self.change_img(self.frame, self.palm_img_holder, self.mask_palm_img_holder, 0, self.img_size)

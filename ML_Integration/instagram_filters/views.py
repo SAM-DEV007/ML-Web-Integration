@@ -17,12 +17,6 @@ def home(request):
     return web
 
 
-@csrf_protect
-def flappy_bird(request):
-    template = loader.get_template('flappy_bird.html')
-    return HttpResponse(template.render({}, request))
-
-
 def img_path(request):
     if request.method == 'POST':
         path = request.POST.get('webimg')
@@ -32,10 +26,17 @@ def img_path(request):
     return HttpResponse('Path not set')
 
 
+@csrf_protect
+def flappy_bird(request):
+    template = loader.get_template('flappy_bird.html')
+    return HttpResponse(template.render({}, request))
+
+
 def stream_flappy_bird(request):
     return StreamingHttpResponse(flappy_gen(), content_type='multipart/x-mixed-replace; boundary=frame')
 
 
+@csrf_protect
 def maths_equation(request):
     template = loader.get_template('maths_equation.html')
     return HttpResponse(template.render({}, request))
@@ -45,6 +46,7 @@ def stream_maths_equation(request):
     return StreamingHttpResponse(maths_gen(), content_type='multipart/x-mixed-replace; boundary=frame')
 
 
+@csrf_protect
 def hand_gesture(request):
     template = loader.get_template('hand_gesture.html')
     return HttpResponse(template.render({}, request))
