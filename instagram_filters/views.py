@@ -12,6 +12,7 @@ from instagram_filters import storage
 
 def home(request):
     web = redirect('main:main')
+    storage.IMG_PATH = None
     if request.COOKIES.get('igstat'):
         web.set_cookie('igstat', 0)
     return web
