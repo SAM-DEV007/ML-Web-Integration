@@ -12,7 +12,7 @@ from instagram_filters import storage
 
 def home(request):
     web = redirect('main:main')
-    storage.IMG_PATH = None
+
     if request.COOKIES.get('igstat'):
         web.set_cookie('igstat', 0)
     return web
@@ -21,7 +21,7 @@ def home(request):
 def img_path(request):
     if request.method == 'POST':
         path = request.POST.get('webimg')
-        storage.IMG_PATH = path
+        storage.IMG_PATH[request.COOKIES.get('localauth')] = path
 
         return HttpResponse('Path set')
     return HttpResponse('Path not set')
@@ -34,7 +34,7 @@ def flappy_bird(request):
 
 
 def stream_flappy_bird(request):
-    return StreamingHttpResponse(flappy_gen(), content_type='multipart/x-mixed-replace; boundary=frame')
+    return StreamingHttpResponse(flappy_gen(request.COOKIES.get('localauth')), content_type='multipart/x-mixed-replace; boundary=frame')
 
 
 @csrf_protect
@@ -44,7 +44,7 @@ def maths_equation(request):
 
 
 def stream_maths_equation(request):
-    return StreamingHttpResponse(maths_gen(), content_type='multipart/x-mixed-replace; boundary=frame')
+    return StreamingHttpResponse(maths_gen(request.COOKIES.get('localauth')), content_type='multipart/x-mixed-replace; boundary=frame')
 
 
 @csrf_protect
@@ -54,4 +54,4 @@ def hand_gesture(request):
 
 
 def stream_hand_gesture(request):
-    return StreamingHttpResponse(hand_gen(), content_type='multipart/x-mixed-replace; boundary=frame')
+    return StreamingHttpResponse(hand_gen(request.COOKIES.get('localauth')), content_type='multipart/x-mixed-replace; boundary=frame')

@@ -10,11 +10,11 @@ import time
 import numpy as np
 
 
-def maths_gen():
+def maths_gen(localauth):
     obj = MathsEquation()
 
     while True:
-        frame = obj.main()
+        frame = obj.main(localauth)
         if frame is not None:
             yield (b'--frame\r\n'
                     b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
@@ -186,10 +186,10 @@ class MathsEquation():
         return first_launch, ans, ans_corr, get_dir, left_op, right_op, question_asked, correct_op_direction, broadcast_corr, broadcast_incorr
 
 
-    def main(self):
+    def main(self, localauth):
         '''The main function for starting the program'''
 
-        if storage.IMG_PATH is None: 
+        if not storage.IMG_PATH.get(localauth): 
             return
 
         if self.ans > (len(self.dict_eq) - 1):
@@ -203,7 +203,7 @@ class MathsEquation():
                     pass
 
         #_, self.frame = self.vid.read()
-        req = urlopen(storage.IMG_PATH)
+        req = urlopen(storage.IMG_PATH[localauth])
         arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
 
         self.frame = cv2.cvtColor(cv2.imdecode(arr, -1), cv2.COLOR_BGRA2BGR)

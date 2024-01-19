@@ -14,11 +14,11 @@ from instagram_filters import storage
 from django.conf import settings
 
 
-def flappy_gen():
+def flappy_gen(localauth):
     obj = FlappyBird()
 
     while True:
-        frame = obj.main()
+        frame = obj.main(localauth)
         if frame is not None:
             yield (b'--frame\r\n'
                     b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
@@ -113,14 +113,14 @@ class FlappyBird():
         return round(angle)
 
 
-    def main(self):
+    def main(self, localauth):
         if (time.time() - self.buffer) > 3: self.start = True
 
-        if storage.IMG_PATH is None: 
+        if not storage.IMG_PATH.get(localauth): 
             return
 
         #_, self.frame = self.vid.read()
-        req = urlopen(storage.IMG_PATH)
+        req = urlopen(storage.IMG_PATH[localauth])
         arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
 
         self.frame = cv2.cvtColor(cv2.imdecode(arr, -1), cv2.COLOR_BGRA2BGR)

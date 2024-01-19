@@ -1,1 +1,1 @@
-IMG_PATH = None
+IMG_PATH = {}
