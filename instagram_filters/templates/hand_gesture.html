@@ -4,7 +4,7 @@
 <html>
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="{% static 'instagram_filters/js/client_video.js' %}"></script>
+        <script src="{% static 'instagram_filters/js/hand_gesture.js' %}"></script>
         <link rel="icon" href="{% static 'main/assets/Logo.jpg' %}">
         <link rel="stylesheet" href="{% static 'instagram_filters/css/master.css' %}">
         <title>Hand Gesture</title>
@@ -18,7 +18,7 @@
             <a id="subtitle_link" href="https://github.com/SAM-DEV007/Instagram-Filters/tree/main/Hand_Gesture" target="_blank"><h1 id="subtitle" title="Source code">Hand Gesture</h1></a>
             <h1 id="disclaimer">Disclaimer: The video dimensions are fixed to 640x480 px.</h1>
             <div id="video_main">
-                <img alt="Video not found!", id="video">
+                <img alt="Video loading or not found!", id="video">
                 <form>{% csrf_token %}<button type="submit" id="restart" name="restart" value="true" formaction="{% url 'instagram_filters:hand_gesture' %}">RESTART</button></form>
                 <video id="tempvid" hidden></video>
                 <canvas id="canvas" hidden></canvas>

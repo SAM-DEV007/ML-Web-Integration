@@ -16,6 +16,7 @@ from django.core.asgi import get_asgi_application
 from django.urls import path
 
 from instagram_filters.flappy_bird import FlappyBird
+from instagram_filters.maths_equation import MathsEquation
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ML_Integration.settings')
 
@@ -32,7 +33,7 @@ application = ProtocolTypeRouter({
         AuthMiddlewareStack(
             URLRouter([
                 path("flappy_bird", FlappyBird.as_asgi()),
-                #path("maths_equation", MathsEquation.as_asgi()),
+                path("maths_equation", MathsEquation.as_asgi()),
                 #path("hand_gesture", HandGesture.as_asgi()),
             ])
         )

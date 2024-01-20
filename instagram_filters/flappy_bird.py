@@ -107,64 +107,6 @@ class FlappyBird(AsyncWebsocketConsumer):
         angle = math.degrees(math.atan2(c[1]-b[1], c[0]-b[0]) - math.atan2(a[1]-b[1], a[0]-b[0]))
         
         return round(angle)
-    
-
-    async def pillar_func(self, i, pillar):
-        if pillar is None:
-            self.random_resize = random.randint(50, 260)
-            self.pillar_resize[i] = self.random_resize
-            pillar = await self.loop.run_in_executor(None, copy.deepcopy, self.original_pillar)
-
-            pillar = pillar[self.random_resize: self.random_resize+480, 0: self.p_w]
-            pillar = await self.loop.run_in_executor(None, cv2.resize, pillar, (self.p_w, self.h))
-            self.mask_pillar = await self.mask(pillar)
-        
-        self.pv_val = self.pv_list[i]
-
-        self.pillar_exc_y = set(range((280-self.pillar_resize[i]), (490-self.pillar_resize[i])+1))
-        self.pillar_all_y = set(range(0, self.h+1))
-
-        self.pillar_x = list(range(self.pv_val+10, self.pv_val + 100))
-        self.pillar_y = list(self.pillar_all_y - self.pillar_exc_y)
-
-        if self.flappy_coords:
-            self.begin, self.end = self.flappy_coords
-            self.begin_x, self.begin_y = self.begin
-            self.end_x, self.end_y = self.end
-
-            self.flappy_x = list(range(self.begin_x+15, self.end_x-15))
-            self.flappy_y = list(range(self.begin_y+20, self.end_y-15))
-            
-            if any(val in self.pillar_x for val in self.flappy_x) and any(val in self.pillar_y for val in self.flappy_y):
-                self.finish = True
-
-        if self.pillar_point_list[i] is False and self.finish is False and self.start:
-            if self.flappy_coords:
-                if (self.flappy_coords[1][0] - 80) > self.pv_val:
-                    self.pillar_point_list[i] = True
-                    self.score += 1
-        
-        if self.mask_pillar_list[i] is not None:
-            self.mask_pillar = self.mask_pillar_list[i]
-
-        self.rois = self.frame[0:self.h, self.pv_val: self.p_w+self.pv_val]
-        self.rois[np.where(self.mask_pillar)] = 0
-        self.rois += pillar
-
-        self.pillar_list[i] = pillar
-        self.mask_pillar_list[i] = self.mask_pillar
-
-        if self.finish is False and self.start:
-            self.pv_list[i] -= 10
-
-        if self.pv_list[i] <= 0: 
-            self.pv_list[i] = 525
-            self.pillar_resize[i] = 0
-
-            self.mask_pillar_list[i] = None
-            self.pillar_list[i] = None
-
-            self.pillar_point_list[i] = False
 
 
     async def receive(self, bytes_data):
@@ -189,7 +131,62 @@ class FlappyBird(AsyncWebsocketConsumer):
                 self.pillar_val = len(self.pillar_list)
                 self.fl = False
 
-            await asyncio.gather(*[self.pillar_func(i, pillar) for i, pillar in enumerate(self.pillar_list[:self.pillar_val])])
+            for i, pillar in enumerate(self.pillar_list[:self.pillar_val]):
+                if pillar is None:
+                    self.random_resize = random.randint(50, 260)
+                    self.pillar_resize[i] = self.random_resize
+                    pillar = await self.loop.run_in_executor(None, copy.deepcopy, self.original_pillar)
+
+                    pillar = pillar[self.random_resize: self.random_resize+480, 0: self.p_w]
+                    pillar = await self.loop.run_in_executor(None, cv2.resize, pillar, (self.p_w, self.h))
+                    self.mask_pillar = await self.mask(pillar)
+                
+                self.pv_val = self.pv_list[i]
+
+                self.pillar_exc_y = set(range((280-self.pillar_resize[i]), (490-self.pillar_resize[i])+1))
+                self.pillar_all_y = set(range(0, self.h+1))
+
+                self.pillar_x = list(range(self.pv_val+10, self.pv_val + 100))
+                self.pillar_y = list(self.pillar_all_y - self.pillar_exc_y)
+
+                if self.flappy_coords:
+                    self.begin, self.end = self.flappy_coords
+                    self.begin_x, self.begin_y = self.begin
+                    self.end_x, self.end_y = self.end
+
+                    self.flappy_x = list(range(self.begin_x+15, self.end_x-15))
+                    self.flappy_y = list(range(self.begin_y+20, self.end_y-15))
+
+                    if any(val in self.pillar_x for val in self.flappy_x) and any(val in self.pillar_y for val in self.flappy_y):
+                        self.finish = True
+
+                if self.pillar_point_list[i] is False and self.finish is False and self.start:
+                    if self.flappy_coords:
+                        if (self.flappy_coords[1][0] - 80) > self.pv_val:
+                            self.pillar_point_list[i] = True
+                            self.score += 1
+                
+                if self.mask_pillar_list[i] is not None:
+                    self.mask_pillar = self.mask_pillar_list[i]
+
+                self.rois = self.frame[0:self.h, self.pv_val: self.p_w+self.pv_val]
+                self.rois[np.where(self.mask_pillar)] = 0
+                self.rois += pillar
+
+                self.pillar_list[i] = pillar
+                self.mask_pillar_list[i] = self.mask_pillar
+
+                if self.finish is False and self.start:
+                    self.pv_list[i] -= 10
+
+                if self.pv_list[i] <= 0: 
+                    self.pv_list[i] = 525
+                    self.pillar_resize[i] = 0
+
+                    self.mask_pillar_list[i] = None
+                    self.pillar_list[i] = None
+
+                    self.pillar_point_list[i] = False
 
             if self.face.detections:
                 detection = self.face.detections[0]

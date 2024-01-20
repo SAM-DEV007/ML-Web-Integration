@@ -18,7 +18,7 @@
             <a id="subtitle_link" href="https://github.com/SAM-DEV007/Instagram-Filters/tree/main/Flappy_Bird" target="_blank"><h1 id="subtitle" title="Source code">Flappy Bird</h1></a>
             <h1 id="disclaimer">Disclaimer: The video dimensions are fixed to 640x480 px.</h1>
             <div id="video_main">
-                <img alt="Video not found!", id="video">
+                <img alt="Video loading or not found!", id="video">
                 <form>{% csrf_token %}<button type="submit" id="restart" name="restart" value="true" formaction="{% url 'instagram_filters:flappy_bird' %}">RESTART</button></form>
                 <video id="tempvid" hidden></video>
                 <canvas id="canvas" hidden></canvas>
