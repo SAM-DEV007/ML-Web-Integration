@@ -26,6 +26,10 @@ cd ML-Web_Integration
 python -m venv .venv
 .venv\Scripts\activate.bat
 ```
+### Requirements
+```
+pip install -r requirements.txt
+```
 ### Initialize
 ```
 python manage.py makemigrations
