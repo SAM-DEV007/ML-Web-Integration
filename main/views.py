@@ -4,8 +4,6 @@ from django.template import loader
 
 import json
 
-from instagram_filters import storage
-
 
 def home(request, context = {'igstat': 1, 'rightshift': 0}):
     template = loader.get_template('home.html')

@@ -1,8 +1,5 @@
 from django.conf import settings
 
-from urllib.request import urlopen
-from instagram_filters import storage
-
 import mediapipe as mp
 import numpy as np
 import tensorflow as tf

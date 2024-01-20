@@ -1,8 +1,5 @@
 from django.conf import settings
 
-from urllib.request import urlopen
-from instagram_filters import storage
-
 import random
 import cv2
 import os

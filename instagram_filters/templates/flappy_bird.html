@@ -4,7 +4,7 @@
 <html>
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="{% static 'instagram_filters/js/client_video.js' %}"></script>
+        <script src="{% static 'instagram_filters/js/flappy_bird.js' %}"></script>
         <link rel="icon" href="{% static 'main/assets/Logo.jpg' %}">
         <link rel="stylesheet" href="{% static 'instagram_filters/css/master.css' %}">
         <title>Flappy Bird</title>
@@ -18,15 +18,10 @@
             <a id="subtitle_link" href="https://github.com/SAM-DEV007/Instagram-Filters/tree/main/Flappy_Bird" target="_blank"><h1 id="subtitle" title="Source code">Flappy Bird</h1></a>
             <h1 id="disclaimer">Disclaimer: The video dimensions are fixed to 640x480 px.</h1>
             <div id="video_main">
-                <img src="{% url 'instagram_filters:flappy_bird_feed' %}", alt="Video not found!", id="video">
+                <img alt="Video not found!", id="video">
                 <form>{% csrf_token %}<button type="submit" id="restart" name="restart" value="true" formaction="{% url 'instagram_filters:flappy_bird' %}">RESTART</button></form>
-                <input id="urlpost" value="{% url 'instagram_filters:image_path' %}" type=hidden readonly>
-                <form id="vid" method="POST" name="video_form" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <video id="tempvid" hidden></video>
-                    <input id="webimg" value="" name="img_path" type="hidden">
-                    <canvas id="canvas" hidden></canvas>
-                </form>
+                <video id="tempvid" hidden></video>
+                <canvas id="canvas" hidden></canvas>
             </div>
         </div>
     </body>

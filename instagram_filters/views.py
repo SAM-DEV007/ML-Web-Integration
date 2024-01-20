@@ -3,12 +3,6 @@ from django.http import HttpResponse, StreamingHttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_protect
 
-from instagram_filters.flappy_bird import flappy_gen
-from instagram_filters.hand_gesture import hand_gen
-from instagram_filters.maths_equation import maths_gen
-
-from instagram_filters import storage
-
 
 def home(request):
     web = redirect('main:main')
@@ -18,23 +12,10 @@ def home(request):
     return web
 
 
-def img_path(request):
-    if request.method == 'POST':
-        path = request.POST.get('webimg')
-        storage.IMG_PATH[request.COOKIES.get('localauth')] = path
-
-        return HttpResponse('Path set')
-    return HttpResponse('Path not set')
-
-
 @csrf_protect
 def flappy_bird(request):
     template = loader.get_template('flappy_bird.html')
     return HttpResponse(template.render({}, request))
-
-
-def stream_flappy_bird(request):
-    return StreamingHttpResponse(flappy_gen(request.COOKIES.get('localauth')), content_type='multipart/x-mixed-replace; boundary=frame')
 
 
 @csrf_protect
@@ -43,15 +24,7 @@ def maths_equation(request):
     return HttpResponse(template.render({}, request))
 
 
-def stream_maths_equation(request):
-    return StreamingHttpResponse(maths_gen(request.COOKIES.get('localauth')), content_type='multipart/x-mixed-replace; boundary=frame')
-
-
 @csrf_protect
 def hand_gesture(request):
     template = loader.get_template('hand_gesture.html')
     return HttpResponse(template.render({}, request))
-
-
-def stream_hand_gesture(request):
-    return StreamingHttpResponse(hand_gen(request.COOKIES.get('localauth')), content_type='multipart/x-mixed-replace; boundary=frame')
