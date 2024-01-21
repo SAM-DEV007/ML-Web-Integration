@@ -6,9 +6,8 @@ from django.views.decorators.csrf import csrf_protect
 
 def home(request):
     web = redirect('main:main')
-
-    if request.COOKIES.get('rightshift'):
-        web.set_cookie('rightshift', 1)
+    web.set_cookie('rightshift', 1)
+    
     return web
 
 
