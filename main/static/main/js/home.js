@@ -1,4 +1,8 @@
 $(document).ready(function(){
+    if ($('#wc_model').val() == '1'){
+        alert('The model is currently being initialized. Please try again later!')
+    }
+
     let igstat = 0
 
     function igext() {
