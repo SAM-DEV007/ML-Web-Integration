@@ -16,10 +16,9 @@ if not os.path.exists(model_path):
     
     from word_classifier import download_model
 
-model = tf.keras.models.load_model(model_path, custom_objects={'KerasLayer': hub.KerasLayer}, compile=False)
-
 
 def predict(txt: str) -> str:
+    model = tf.keras.models.load_model(model_path, custom_objects={'KerasLayer': hub.KerasLayer}, compile=False)
     result_arg = (np.squeeze(model.predict([txt])))
     result = np.argmax(result_arg)
 
