@@ -11,10 +11,23 @@
     </head>
     <body>
         <div class="main">
-            
+            <a href="{% url 'main:main' %}"><img id="logo" src="{% static 'main/assets/Logo.jpg' %}" alt="Logo"></a>
+            <a id="wc" href="{% url 'word_classifier:wc_home' %}"><h1 id="title">Word Classifier</h1></a>
         </div>
         <div class="container">
-
+            <a id="subtitle_link" href="https://github.com/SAM-DEV007/Word-Classifier" target="_blank"><h1 id="subtitle" title="Source code">Source Code</h1></a>
+            <h1 id="disclaimer"><u>Disclaimer</u>: The model is trained on a very small dataset. The predictions may not be accurate.</h1>
+            <p id="classify">The model classifies the sentences as: <b>N/A</b>, <b>Saying Hi</b>, <b>Borrow Money</b> and <b>Youtube Interaction</b>.</p>
+            <div id="model">
+                <div id="model_main">
+                    <p id="input" class="head">INPUT:</p>
+                    <input class="sentence" id="sentence" type="text" placeholder="Roses are red, Violets are blue...">
+                    <h1 id="wordcount" class="word">Limit left: </h1><h1 id="limit" class="word">100</h1>
+                    <h1 id="predict">PREDICT</h1>
+                    <p id="pred" class="head">PREDICTION:</p>
+                    <input class="sentence" id="predictsen" type="text" placeholder="I predict..." readonly>
+                </div>
+            </div>
         </div>
     </body>
     {% include 'footer.html' %}

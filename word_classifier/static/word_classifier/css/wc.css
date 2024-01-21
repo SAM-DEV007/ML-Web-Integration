@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+
+body {
+    margin: 38.8px;
+    margin-bottom: 0px;
+    background-color: black;
+    min-height: 737.2px;
+    display: flex;
+    flex-direction: column;
+}
+
+#logo {
+    height: 5rem;
+    width: 5rem;
+    cursor: pointer;
+}
+
+#title {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 2rem;
+    color: white;
+    margin-left: 35.8px;
+    cursor: pointer;
+}
+
+#wc {
+    color: white;
+    text-decoration: none;
+}
+
+#subtitle {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    color: yellow;
+    margin-left: 115.8px;
+    margin-top: -20px;
+    cursor: pointer;
+}
+
+#subtitle_link{
+    text-decoration: none;
+}
+
+#disclaimer {
+    font-family:'Times New Roman', Times, serif; 
+    font-size: 1rem;
+    color: white;
+    margin-left: 115.8px;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    min-height: calc(100vh - 270px);
+}
+
+#classify {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    font-size: 0.8rem;
+    margin-left: 115.8px;
+    margin-top: 50px;
+}
+
+#model {
+    margin-top: 0.8px;
+    display: grid;
+    height: calc(100vh - 390px);
+    place-items: center;
+}
+
+.head {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.sentence {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8rem;
+    width: 400px;
+    height: 30px;
+    border-radius: 10px;
+    margin: 10px;
+    margin-top: 0px;
+    padding: 3px 20px;
+    border-color: white;
+}
+
+#sentence:hover {
+    transform: scale(1.05);
+}
+
+.word {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.6rem;
+    color: white;
+}
+
+#wordcount {
+    margin-left: 380px;
+}
+
+#limit {
+    margin-top: -18px;
+    margin-left: 430px;
+}
+
+#predict {
+    color: white;
+    font-size: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px;
+    width: fit-content;
+    cursor: pointer;
+    margin-top: 30px;
+    margin-left: 370px;
+}
+
+#predict:hover {
+    color: black;
+    background-color: white;
+    border-color: black;
+}
+
+#pred {
+    margin-top: 40px;
+}
+
+#predictsen {
+    pointer-events: none;
+}
