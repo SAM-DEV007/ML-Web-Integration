@@ -27,6 +27,7 @@ def download_model():
             for chunk in response.iter_content(CHUNK_SIZE):
                 if chunk:
                     datasize = f.write(chunk)
+        print(f'Model downloaded at {destination}')
     except BaseException as err:
         traceback.print_exc()
         if os.path.exists(destination): 

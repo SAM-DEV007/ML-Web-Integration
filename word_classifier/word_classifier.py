@@ -4,10 +4,18 @@ import tensorflow as tf
 import tensorflow_hub as hub
 import numpy as np
 
+import os
+
 
 txt_arg = ["Not Available (N/A)", "Saying Hi", "Borrow Money", "YouTube Interaction"]
 
 model_path = str(settings.BASE_DIR / 'word_classifier/Model/WordClassifier_Model.h5')
+if not os.path.exists(model_path):
+    if not os.path.isdir(str(settings.BASE_DIR / 'word_classifier/Model')):
+        os.mkdir(str(settings.BASE_DIR / 'word_classifier/Model'))
+    
+    from word_classifier import download_model
+
 model = tf.keras.models.load_model(model_path, custom_objects={'KerasLayer': hub.KerasLayer}, compile=False)
 
 
