@@ -4,6 +4,8 @@ from django.template import loader
 from django.views.decorators.csrf import csrf_protect
 from django.conf import settings
 
+from word_classifier import word_classifier
+
 import os
 
 
@@ -17,7 +19,7 @@ def home(request):
 @csrf_protect
 def model(request):
     if request.method == 'POST':
-        pass
+        print(word_classifier.predict(request.POST.get('sentence')))
     
     if not os.path.exists(str(settings.BASE_DIR / 'word_classifier/Model/WordClassifier_Model.h5')):
         web = redirect('main:main')

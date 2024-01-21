@@ -5,14 +5,14 @@ import tensorflow_hub as hub
 import numpy as np
 
 
-model_path = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))) + '\\Model\\Model_Data', 'WordClassifier_Model.h5')
+txt_arg = ["Not Available (N/A)", "Saying Hi", "Borrow Money", "YouTube Interaction"]
 
+model_path = str(settings.BASE_DIR / 'word_classifier/Model/WordClassifier_Model.h5')
 model = tf.keras.models.load_model(model_path, custom_objects={'KerasLayer': hub.KerasLayer}, compile=False)
-txt = input("Enter your message: ")
 
-result_arg = (np.squeeze(model.predict([txt])))
-result = np.argmax(result_arg)
-txt_arg = ["N/A", "Saying Hi", "Borrow Money", "YouTube Interaction"]
 
-print(f"\nThe prediction is based between - {' | '.join(txt_arg)}.\n")
-print(f"The prediction is {txt_arg[result]}, with the probability of {np.round(result_arg[result]*100, 2)}%")
+def predict(txt: str) -> str:
+    result_arg = (np.squeeze(model.predict([txt])))
+    result = np.argmax(result_arg)
+
+    return f'{txt_arg[result]} - ({np.round(result_arg[result]*100, 2)}%)'
