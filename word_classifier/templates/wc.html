@@ -22,6 +22,7 @@
                 <div id="model_main">
                     <p id="input" class="head">INPUT:</p>
                     <input class="sentence" id="sentence" type="text" placeholder="Roses are red, Violets are blue...">
+                    {% csrf_token %}
                     <h1 id="wordcount" class="word">Limit left: </h1><h1 id="limit" class="word">100</h1>
                     <h1 id="predict">PREDICT</h1>
                     <p id="pred" class="head">PREDICTION:</p>
@@ -29,6 +30,7 @@
                 </div>
             </div>
         </div>
+        <input id="url" val="{% url 'word_classifier:wc_model' %}" type="hidden">
     </body>
     {% include 'footer.html' %}
 </html>
