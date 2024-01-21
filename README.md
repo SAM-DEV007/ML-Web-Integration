@@ -11,6 +11,7 @@ The backend is written in Python based on Django. The website aims to feature mo
 
 The repositories of the projects included:
 - [Instagram Filters](https://github.com/SAM-DEV007/Instagram-Filters)
+- [Word Classifier](https://github.com/SAM-DEV007/Word-Classifier)
 
 # Installation
 - Python 3.x version.
