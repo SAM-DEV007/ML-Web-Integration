@@ -150,13 +150,12 @@ body {
     color: black;
 }
 
-#wclwindow {
+.single {
     text-align: center;
-    margin-top: -310.4px;
     visibility: hidden;
 }
 
-#wclwindow_text {
+.singletxt {
     border: 2.328px solid black;
     border-radius: 7.76px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -165,13 +164,18 @@ body {
     opacity: 0;
 }
 
-#footer{
-    width: 100%;
-    text-align: center;
-    margin-top: auto;
-    color: white;
+#wclwindow {
+    margin-top: -310.4px;
 }
 
-#github_footer {
-    color: whitesmoke;
+#wclwindow_text {
+    cursor: pointer;
+}
+
+#wclink {
+    color: black;
+}
+
+#comingsoon {
+    margin-top: -65.4px;
 }
