@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, StreamingHttpResponse
+from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_protect
 

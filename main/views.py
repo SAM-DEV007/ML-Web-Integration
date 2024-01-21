@@ -8,7 +8,7 @@ import json
 def home(request, context = {'igstat': 1, 'rightshift': 0}):
     template = loader.get_template('home.html')
 
-    if request.COOKIES.get('igstat'):
+    if request.COOKIES.get('igstat') and request.COOKIES.get('rightshift'):
         context = {'igstat': request.COOKIES['igstat'], 'rightshift': request.COOKIES['rightshift']}
 
     web = HttpResponse(template.render(context, request))
