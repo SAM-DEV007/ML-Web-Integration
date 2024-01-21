@@ -18,12 +18,6 @@ def home(request):
 def model(request):
     if request.method == 'POST':
         pass
-    
-    if not os.path.exists(str(settings.BASE_DIR / 'word_classifier/Model/WordClassifier_Model.h5')):
-        web = redirect('main:main')
-        web.set_cookie('wcmodel', 1)
-
-        return web
 
     template = loader.get_template('wc.html')
     return HttpResponse(template.render({}, request))
