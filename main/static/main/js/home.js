@@ -1,4 +1,8 @@
 $(document).ready(function(){
+    if ($('#wc_model').val() == '1'){
+        alert('The model is not detected. Please, contact the administrator. It may not be downloaded.')
+    }
+
     let igstat = 0
 
     function igext() {

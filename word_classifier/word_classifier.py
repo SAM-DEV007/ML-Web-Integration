@@ -1,13 +1,8 @@
 from django.conf import settings
-from tqdm import tqdm
 
 import tensorflow as tf
 import tensorflow_hub as hub
 import numpy as np
-
-import requests
-import sys
-import traceback
 
 
 model_path = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))) + '\\Model\\Model_Data', 'WordClassifier_Model.h5')
