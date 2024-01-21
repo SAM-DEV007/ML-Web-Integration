@@ -164,3 +164,6 @@ staticfiles/
 
 # Web Development files
 Web_Dev/
+
+# Model
+word_classifier/Model/WordClassifier_Model.h5
