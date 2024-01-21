@@ -61,6 +61,7 @@ TEMPLATES = [
         'DIRS': [
             BASE_DIR / 'main/templates',
             BASE_DIR / 'instagram_filters/templates',
+            BASE_DIR / 'word_classifier/templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -123,6 +124,7 @@ USE_TZ = True
 STATICFILES_DIRS = [
     BASE_DIR / 'main/static',
     BASE_DIR / 'instagram_filters/static',
+    BASE_DIR / 'word_classifier/static',
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = 'static/'
