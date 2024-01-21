@@ -21,5 +21,5 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('instagram/', include('instagram_filters.urls')),
-    path('word_classifiers/', include('word_classifier.urls')),
+    path('word_classifier/', include('word_classifier.urls')),
 ]
