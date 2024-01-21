@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'instagram_filters',
+    'word_classifier',
 ]
 
 MIDDLEWARE = [
@@ -58,11 +60,7 @@ ROOT_URLCONF = 'ML_Integration.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            BASE_DIR / 'main/templates',
-            BASE_DIR / 'instagram_filters/templates',
-            BASE_DIR / 'word_classifier/templates',
-        ],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,12 +118,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
+'''
 STATICFILES_DIRS = [
     BASE_DIR / 'main/static',
     BASE_DIR / 'instagram_filters/static',
     BASE_DIR / 'word_classifier/static',
 ]
+'''
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = 'static/'
 
