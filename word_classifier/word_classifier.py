@@ -12,9 +12,6 @@ import traceback
 
 model_path = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))) + '\\Model\\Model_Data', 'WordClassifier_Model.h5')
 
-if not os.path.exists(model_path):
-    download_model('1LAiyCV0p6v-lROdXbtrzKlF4APNmM3Qm', model_path)
-
 model = tf.keras.models.load_model(model_path, custom_objects={'KerasLayer': hub.KerasLayer}, compile=False)
 txt = input("Enter your message: ")
 
