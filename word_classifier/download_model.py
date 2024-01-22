@@ -18,7 +18,8 @@ def download_model():
 
     session = requests.Session()
 
-    response = session.get('https://www.googleapis.com/drive/v3/files/1LAiyCV0p6v-lROdXbtrzKlF4APNmM3Qm?alt=media&key=AIzaSyD0M_vstmhIl8M242-qn3K544gWoWlG-3A', stream = True)
+    API_KEY = os.environ.get('GOOGLE_API_KEY')
+    response = session.get(f'https://www.googleapis.com/drive/v3/files/1LAiyCV0p6v-lROdXbtrzKlF4APNmM3Qm?alt=media&key={API_KEY}', stream = True)
 
     try:
         if not os.path.isdir(model_folder):
