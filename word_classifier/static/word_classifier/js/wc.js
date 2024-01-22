@@ -6,6 +6,7 @@ $(document).ready(function(){
     });
 
     $('#predict').click(function(){
+        writeReadOnly($('#predictsen'), 'WAITING...');
         $.ajax({
             url: $('#url').val(),
             data: {
@@ -14,13 +15,23 @@ $(document).ready(function(){
             },
             type: 'POST',
             success: function(response) {
-                $('#predictsen').prop('readonly', false);
-                $('#predictsen').val(response);
-                $('#predictsen').prop('readonly', true);
+                if (response.includes('<!DOCTYPE html>')){
+                    writeReadOnly($('#predictsen'), 'ERROR: FAILED TO FETCH DATA');
+                    console.log('Model not found!');
+                    return;
+                }
+                writeReadOnly($('#predictsen'), response);
             },
             error: function(error) {
+                writeReadOnly($('#predictsen'), 'ERROR: FAILED TO FETCH DATA');
                 console.log(error);
             }
         });
     });
+
+    function writeReadOnly(element, text){
+        element.prop('readonly', false);
+        element.val(text);
+        element.prop('readonly', true);
+    }
 });
