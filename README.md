@@ -33,6 +33,14 @@ python -m venv .venv
 ```
 pip install -r requirements.txt
 ```
+- Download Word Classifier model: 
+```
+https://drive.google.com/file/d/1LAiyCV0p6v-lROdXbtrzKlF4APNmM3Qm/view?usp=sharing
+```
+- Save it in the location: 
+```
+ML-Web-Integration/word_classifier/Model/WordClassifier_Model.h5
+```
 ### Initialize
 ```
 python manage.py makemigrations
