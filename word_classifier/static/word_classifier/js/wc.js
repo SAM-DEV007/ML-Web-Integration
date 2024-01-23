@@ -1,8 +1,18 @@
 $(document).ready(function(){
-    $('#limit').text(100);
+    let limit = 50;
+
+    $('#limit').text(limit);
     
     $("#sentence").on("input", function(){
-        $('#limit').text(100 - $(this).val().length);
+        if ($(this).val().length > limit){
+            $(this).val($(this).val().substring(0, limit));
+        }
+        if ((limit - $(this).val().length) <= 30){
+            $('#limit').css('color', 'red');
+        } else {
+            $('#limit').css('color', 'white');
+        }
+        $('#limit').text(limit - $(this).val().length);
     });
 
     $('#predict').click(function(){
