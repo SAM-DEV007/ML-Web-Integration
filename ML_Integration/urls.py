@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('main.urls')),
     path('instagram/', include('instagram_filters.urls')),
     path('word_classifier/', include('word_classifier.urls')),
+    path('human_emotions/', include('human_emotions.urls')),
 ]
