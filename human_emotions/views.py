@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-# Create your views here.
+
+def home(request):
+    web = redirect('main:main')
+    web.set_cookie('rightshift', 2)
+
+    return web
