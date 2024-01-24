@@ -20,7 +20,7 @@ def home(request):
 def model(request):
     if not os.path.exists(str(settings.BASE_DIR / 'word_classifier/Model/WordClassifier_Model.h5')):
         web = redirect('main:main')
-        web.set_cookie('wcmodel', 1)
+        web.set_cookie('model', 1)
         web.set_cookie('rightshift', 1)
 
         return web
