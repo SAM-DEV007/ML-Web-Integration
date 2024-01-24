@@ -9,7 +9,7 @@ def home(request, context = {'igstat': 1, 'rightshift': 0}):
     context = {
         'igstat': request.COOKIES.get('igstat', 1), 
         'rightshift': request.COOKIES.get('rightshift', 0),
-        'wcmodel': request.COOKIES.get('model', 0),
+        'model': request.COOKIES.get('model', 0),
     }
 
     web = HttpResponse(template.render(context, request))
