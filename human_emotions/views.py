@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.template import loader
 from django.conf import settings
 
+import os
+
 
 def home(request):
     web = redirect('main:main')
