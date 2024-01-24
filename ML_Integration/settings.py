@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'main',
     'instagram_filters',
     'word_classifier',
+    'human_emotions',
 ]
 
 MIDDLEWARE = [
