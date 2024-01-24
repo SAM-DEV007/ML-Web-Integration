@@ -164,6 +164,10 @@ body {
     opacity: 0;
 }
 
+.singlelink {
+    color: black;
+}
+
 #wclwindow {
     margin-top: -310.4px;
 }
@@ -172,8 +176,12 @@ body {
     cursor: pointer;
 }
 
-#wclink {
-    color: black;
+#hewindow {
+    margin-top: -67.4px;
+}
+
+#hewindow_text {
+    cursor: pointer;
 }
 
 #comingsoon {

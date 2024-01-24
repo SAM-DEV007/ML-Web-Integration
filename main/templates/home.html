@@ -27,7 +27,10 @@
                     <a class="iglink" id="ighand" href="{% url 'instagram_filters:hand_gesture' %}"><h4 class="igtxt" id="ighand_text">Hand Gesture</h4></a>
                 </div>
                 <div id="wclwindow" class="single">
-                    <a id="wclink" href="{% url 'word_classifier:wc_model' %}"><h2 id="wclwindow_text" class="singletxt">WORD CLASSIFIER</h2></a>
+                    <a id="wclink" class="singlelink" href="{% url 'word_classifier:wc_model' %}"><h2 id="wclwindow_text" class="singletxt">WORD CLASSIFIER</h2></a>
+                </div>
+                <div id="hewindow" class="single">
+                    <a id="helink" class="singlelink" href="{% url 'human_emotions:he_model' %}"><h2 id="hewindow_text" class="singletxt">HUMAN EMOTIONS</h2></a>
                 </div>
                 <div id="comingsoon" class="single">
                     <h2 id="comingsoon_text" class="singletxt">COMING SOON...</h2>
@@ -37,6 +40,7 @@
         <input type="hidden" id="igwindow_var" value="{{ igstat }}" readonly>
         <input type="hidden" id="right_var" value="{{ rightshift }}" readonly>
         <input type="hidden" id="wc_model" value="{{ wcmodel }}" readonly>
+        <input type="hidden" id="he_model" value="{{ hemodel }}" readonly>
     </body>
     {% include 'footer.html' %}
 </html>
