@@ -1,0 +1,39 @@
+import os
+import requests
+import traceback
+
+
+def download_model():
+    '''
+    Downloads and saves the model.
+
+    If the model fails to download, it can be downloaded manually:
+    https://drive.google.com/file/d/1dpucQqu9wyGcK2rbkgbY06Geb13P6ZuN
+    '''
+
+    model_folder = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))), 'Model')
+    destination = os.path.join(model_folder, 'WordClassifier_Model.h5')
+
+    CHUNK_SIZE = 32768
+
+    session = requests.Session()
+
+    API_KEY = os.environ.get('GOOGLE_API_KEY')
+    response = session.get(f'https://www.googleapis.com/drive/v3/files/1dpucQqu9wyGcK2rbkgbY06Geb13P6ZuN?alt=media&key={API_KEY}', stream = True)
+
+    try:
+        if not os.path.isdir(model_folder):
+            os.mkdir(model_folder)
+        with open(destination, "wb") as f:
+            for chunk in response.iter_content(CHUNK_SIZE):
+                if chunk:
+                    datasize = f.write(chunk)
+        print(f'Model downloaded at {destination}')
+    except BaseException as err:
+        traceback.print_exc()
+        if os.path.exists(destination): 
+            os.remove(destination)
+        exit()
+
+
+download_model()
