@@ -11,10 +11,17 @@
     </head>
     <body>
         <div class="main">
-
+            <a href="{% url 'main:main' %}"><img id="logo" src="{% static 'main/assets/Logo.jpg' %}" alt="Logo"></a>
+            <a id="he" href="{% url 'human_emotions:he_home' %}"><h1 id="title">Word Classifier</h1></a>
         </div>
         <div class="container">
-
+            <a id="subtitle_link" href="https://github.com/SAM-DEV007/Human-Emotions" target="_blank"><h1 id="subtitle" title="Source code">Source Code</h1></a>
+            <h1 id="disclaimer">Disclaimer: The video dimensions are fixed to 640x480 px.</h1>
+            <div id="video_main">
+                <img id="video">
+                <video id="tempvid" hidden></video>
+                <canvas id="canvas" hidden></canvas>
+            </div>
         </div>
     </body>
     {% include 'footer.html' %}
