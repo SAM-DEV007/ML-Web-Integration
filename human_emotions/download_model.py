@@ -12,7 +12,7 @@ def download_model():
     '''
 
     model_folder = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__))), 'Model')
-    destination = os.path.join(model_folder, 'WordClassifier_Model.h5')
+    destination = os.path.join(model_folder, 'HumanEmotions_Model.h5')
 
     CHUNK_SIZE = 32768
 
