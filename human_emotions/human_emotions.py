@@ -11,11 +11,11 @@ import asyncio
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.exceptions import StopConsumer
 
-from django.conf import settings
+from pathlib import Path
 
 
 face_detection = mp.solutions.face_detection.FaceDetection()
-model_path = str(settings.BASE_DIR / 'human_emotions/Model/HumanEmotions_Model.h5')
+model_path = str(Path(__file__).resolve().parent / 'Model/HumanEmotions_Model.h5')
 
 if not os.path.exists(model_path):
     from human_emotions import download_model
