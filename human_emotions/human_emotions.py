@@ -19,7 +19,7 @@ model_path = str(Path(__file__).resolve().parent / 'Model/HumanEmotions_Model.h5
 
 if not os.path.exists(model_path):
     from human_emotions import download_model
-model = keras.models.load_model(model_path)
+# model = keras.models.load_model(model_path)
 
 
 class HumanEmotions(AsyncWebsocketConsumer):
@@ -38,6 +38,7 @@ class HumanEmotions(AsyncWebsocketConsumer):
     
 
     async def default(self):
+        self.model = keras.models.load_model(model_path) # May slow down the process, but to ensure that the website doesn't shut down
         self.h, self.w = 480, 640
         self.emo = ['Angry', 'Disgusted', 'Fearful', 'Happy', 'Neutral', 'Sad', 'Surprised']
 
@@ -66,7 +67,7 @@ class HumanEmotions(AsyncWebsocketConsumer):
                         img = np.asarray(pred_frame)
                         img = np.expand_dims(img, axis=0)
 
-                        prediction = np.round(np.squeeze(await self.loop.run_in_executor(None, model.predict, img)), 4)
+                        prediction = np.round(np.squeeze(await self.loop.run_in_executor(None, self.model.predict, img)), 4)
                         predict = np.argmax(prediction)
 
                         cv2.rectangle(frame, (x, y), (x+wi, y+he), (0, 255, 0), 2)
