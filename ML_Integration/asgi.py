@@ -19,6 +19,8 @@ from instagram_filters.flappy_bird import FlappyBird
 from instagram_filters.maths_equation import MathsEquation
 from instagram_filters.hand_gesture import HandGesture
 
+from human_emotions.human_emotions import HumanEmotions
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ML_Integration.settings')
 
 application = get_asgi_application()
@@ -36,6 +38,7 @@ application = ProtocolTypeRouter({
                 path("flappy_bird", FlappyBird.as_asgi()),
                 path("maths_equation", MathsEquation.as_asgi()),
                 path("hand_gesture", HandGesture.as_asgi()),
+                path("human_emotions", HumanEmotions.as_asgi()),
             ])
         )
     ),

@@ -6,42 +6,76 @@ import os
 import cv2
 import keras
 
+import base64
+import asyncio
+from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.exceptions import StopConsumer
+
 from django.conf import settings
 
 
-if __name__ == '__main__':
-    model_path = str(settings.BASE_DIR / 'human_emotions/Model/HumanEmotions_Model.h5')
-    model = keras.models.load_model(model_path)
+face_detection = mp.solutions.face_detection.FaceDetection()
+model_path = str(settings.BASE_DIR / 'human_emotions/Model/HumanEmotions_Model.h5')
 
-    h, w = 480, 640
+if not os.path.exists(model_path):
+    from human_emotions import download_model
+model = keras.models.load_model(model_path)
 
-    face_detection = mp.solutions.face_detection.FaceDetection()
 
-    emo = ['Angry', 'Disgusted', 'Fearful', 'Happy', 'Neutral', 'Sad', 'Surprised']
+class HumanEmotions(AsyncWebsocketConsumer):
+    async def connect(self):
+        self.loop = asyncio.get_running_loop()
+        await self.default()
 
-    #
-    _, frame = vid.read()
-    frame = cv2.flip(frame, 1)
+        await self.accept()
+    
 
-    face_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    face = face_detection.process(face_frame)
+    async def disconnect(self, close_code):
+        await self.default()
+        self.stop = True
 
-    if face.detections:
-        for detection in face.detections:
-            face_data = detection.location_data
-            box_data = face_data.relative_bounding_box
-            x = round(box_data.xmin * w)
-            y = round(box_data.ymin * h)
-            wi = round(box_data.width * w)
-            he = round(box_data.height * h)
-        
-            if 0 < x < w and 0 < y < h and 0 < x+wi < w and 0 < y+he < h:
-                gray_frame = frame[y: y+he, x: x+wi]
-                gray_frame = cv2.cvtColor(gray_frame, cv2.COLOR_BGR2GRAY)
-                gray_frame = cv2.resize(gray_frame, (48, 48))
+        raise StopConsumer()
+    
 
-                prediction = np.round(np.squeeze(model.predict(gray_frame)), 4)
-                predict = np.argmax(prediction)
+    async def default(self):
+        self.h, self.w = 480, 640
+        self.emo = ['Angry', 'Disgusted', 'Fearful', 'Happy', 'Neutral', 'Sad', 'Surprised']
 
-                cv2.rectangle(frame, (x, y), (x+wi, y+he), (0, 255, 0), 2)
-                cv2.putText(frame, emo[predict], (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 0), 2, cv2.LINE_AA, False)
+
+    async def receive(self, bytes_data):
+        if bytes_data:
+            frame = await self.loop.run_in_executor(None, cv2.imdecode, np.frombuffer(bytes_data, dtype=np.uint8), cv2.IMREAD_COLOR)
+            frame = await self.loop.run_in_executor(None, cv2.flip, frame, 1)
+
+            face_frame = await self.loop.run_in_executor(None, cv2.cvtColor, frame, cv2.COLOR_BGR2RGB)
+            face = await self.loop.run_in_executor(None, face_detection.process, face_frame)
+
+            if face.detections:
+                for detection in face.detections:
+                    face_data = detection.location_data
+                    box_data = face_data.relative_bounding_box
+                    x = round(box_data.xmin * self.w)
+                    y = round(box_data.ymin * self.h)
+                    wi = round(box_data.width * self.w)
+                    he = round(box_data.height * self.h)
+                
+                    if 0 < x < self.w and 0 < y < self.h and 0 < x+wi < self.w and 0 < y+he < self.h:
+                        pred_frame = frame[y: y+he, x: x+wi]
+                        pred_frame = cv2.resize(pred_frame, (48, 48), interpolation=cv2.INTER_LINEAR_EXACT)
+
+                        img = np.asarray(pred_frame)
+                        img = np.expand_dims(img, axis=0)
+
+                        prediction = np.round(np.squeeze(await self.loop.run_in_executor(None, model.predict, img)), 4)
+                        predict = np.argmax(prediction)
+
+                        cv2.rectangle(frame, (x, y), (x+wi, y+he), (0, 255, 0), 2)
+                        cv2.putText(frame, self.emo[predict], (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 0), 2, cv2.LINE_AA, False)
+
+            self.buffer_img = await self.loop.run_in_executor(None, cv2.imencode, '.jpg', frame)
+            self.b64_img = base64.b64encode(self.buffer_img[1]).decode('utf-8')
+
+            await self.send(self.b64_img)
+        else:
+            await self.default()
+            await self.close()
