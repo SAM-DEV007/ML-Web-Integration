@@ -34,6 +34,7 @@ python -m venv .venv
 ```
 pip install -r requirements.txt
 ```
+- In case, `download_model.py` files fails to download the model:
 - Download Word Classifier model: 
 ```
 https://drive.google.com/file/d/1LAiyCV0p6v-lROdXbtrzKlF4APNmM3Qm/view?usp=sharing
