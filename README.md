@@ -36,11 +36,11 @@ pip install -r requirements.txt
 ```
 - In case, `download_model.py` files fails to download the model:
   (Not updated)
-  - Download Word Classifier model: 
+  - Download the models and save it in the respective location: 
 ```
 https://drive.google.com/file/d/1LAiyCV0p6v-lROdXbtrzKlF4APNmM3Qm/view?usp=sharing
 ```
-  - Save it in the location: 
+
 ```
 ML-Web-Integration/word_classifier/Model/WordClassifier_Model.h5
 ```
