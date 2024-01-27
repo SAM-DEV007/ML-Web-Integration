@@ -34,15 +34,15 @@ python -m venv .venv
 ```
 pip install -r requirements.txt
 ```
-- In case, `download_model.py` files fails to download the model:
-  (Not updated)
-  - Download the models and save it in the respective location: 
+- In case, `download_model.py` files fails to download the model. Download the models and save it in the respective location: 
 ```
 https://drive.google.com/file/d/1LAiyCV0p6v-lROdXbtrzKlF4APNmM3Qm/view?usp=sharing
+https://drive.google.com/file/d/1dpucQqu9wyGcK2rbkgbY06Geb13P6ZuN/view?usp=sharing
 ```
 
 ```
 ML-Web-Integration/word_classifier/Model/WordClassifier_Model.h5
+ML-Web-Integration/human_emotions/Model/HumanEmotions_Model.h5
 ```
 ### Initialize
 ```
