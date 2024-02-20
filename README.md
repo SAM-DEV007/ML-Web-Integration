@@ -16,6 +16,8 @@ The repositories of the projects included:
 - [Word Classifier](https://github.com/SAM-DEV007/Word-Classifier)
 - [Human Emotions](https://github.com/SAM-DEV007/Human-Emotions)
 
+**This is project is now abondaned and no new AI projects will be added.**
+
 # Installation
 - Python 3.x version.
 - `requirements.txt` for the dependencies.
