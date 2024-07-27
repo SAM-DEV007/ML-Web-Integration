@@ -184,6 +184,10 @@ body {
     cursor: pointer;
 }
 
-#comingsoon {
+#icwindow {
     margin-top: -65.4px;
+}
+
+#icwindow_text {
+    cursor: pointer;
 }

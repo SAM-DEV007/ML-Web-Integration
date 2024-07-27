@@ -32,8 +32,8 @@ $(document).ready(function(){
         igwindow();
     });
 
-    let pages = ['#igwindow', '#wclwindow', '#hewindow', '#comingsoon'];
-    let headings = ['#igwindow_text', '#wclwindow_text', '#hewindow_text', '#comingsoon_text'];
+    let pages = ['#igwindow', '#wclwindow', '#hewindow', '#icwindow'];
+    let headings = ['#igwindow_text', '#wclwindow_text', '#hewindow_text', '#icwindow_text'];
     let ig_force_change = false;
     let curr = 0;
 
