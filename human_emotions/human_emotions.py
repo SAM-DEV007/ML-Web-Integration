@@ -12,6 +12,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.exceptions import StopConsumer
 
 from pathlib import Path
+import time
 
 
 face_detection = mp.solutions.face_detection.FaceDetection()
@@ -42,6 +43,12 @@ class HumanEmotions(AsyncWebsocketConsumer):
         self.h, self.w = 480, 640
         self.emo = ['Angry', 'Disgusted', 'Fearful', 'Happy', 'Neutral', 'Sad', 'Surprised']
 
+        self.time = time.time()
+        self.predict = None
+
+        self.bypass = False
+        self.time_refresh = False
+
 
     async def receive(self, bytes_data):
         if bytes_data:
@@ -66,15 +73,27 @@ class HumanEmotions(AsyncWebsocketConsumer):
 
                         img = np.asarray(pred_frame)
                         img = np.expand_dims(img, axis=0)
+                        
+                        current_time = time.time() - self.time
+                        self.bypass = current_time > 3
+                        if self.bypass:
+                            prediction = np.round(np.squeeze(await self.loop.run_in_executor(None, self.model.predict, img)), 4)
+                            self.predict = np.argmax(prediction)
 
-                        prediction = np.round(np.squeeze(await self.loop.run_in_executor(None, self.model.predict, img)), 4)
-                        predict = np.argmax(prediction)
+                            if not self.time_refresh:
+                                self.time = time.time()
+                                self.time_refresh = True
+                        else:
+                            self.time_refresh = False
 
                         cv2.rectangle(frame, (x, y), (x+wi, y+he), (0, 255, 0), 2)
-                        cv2.putText(frame, self.emo[predict], (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 0), 2, cv2.LINE_AA, False)
+                        if self.predict is not None:
+                            cv2.putText(frame, self.emo[self.predict], (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 0), 2, cv2.LINE_AA, False)
+                            cv2.putText(frame, f'Last refreshed: {round(current_time, 2)} sec. ago', (0, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2, cv2.LINE_AA, False)
 
             self.buffer_img = await self.loop.run_in_executor(None, cv2.imencode, '.jpg', frame)
             self.b64_img = base64.b64encode(self.buffer_img[1]).decode('utf-8')
+            self.last_frame = self.b64_img
 
             await self.send(self.b64_img)
         else:
