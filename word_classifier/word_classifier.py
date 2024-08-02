@@ -17,9 +17,13 @@ if not os.path.exists(model_path):
     from word_classifier import download_model
 
 # model = tf.keras.models.load_model(model_path, custom_objects={'KerasLayer': hub.KerasLayer}, compile=False) # Uncomment this line if using sufficient memory for the model to load (saves model prediction time)
+model = None
 
 def predict(txt: str) -> str:
-    model = tf.keras.models.load_model(model_path, custom_objects={'KerasLayer': hub.KerasLayer}, compile=False) # Comment this line if the above same line is uncommented
+    global model
+
+    if not model:
+        model = tf.keras.models.load_model(model_path, custom_objects={'KerasLayer': hub.KerasLayer}, compile=False) # Comment this line if the above same line is uncommented
     result_arg = (np.squeeze(model.predict([txt])))
     result = np.argmax(result_arg)
 
