@@ -14,7 +14,7 @@ def home(request):
 
 
 def model(request):
-    models = 'weights', 'bias.pkl', 'tokenizer.pkl', 'mobilenet_v3_large_weights.h5', 'weights/checkpoint', 'weights/model.tf.data-00000-of-00001', 'weights/model.tf.index'
+    models = 'weights', 'bias.pkl', 'tokenizer.pkl', 'weights/checkpoint', 'weights/model.tf.data-00000-of-00001', 'weights/model.tf.index'
 
     for i in models:
         if not os.path.exists(str(settings.BASE_DIR / f'image_caption/Model/{i}')):
