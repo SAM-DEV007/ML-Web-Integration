@@ -19,11 +19,12 @@
             <h1 id="disclaimer"><u>Disclaimer</u>: The video dimensions are fixed to 640x480 px.</h1>
             <div id="video_main">
                 <img id="video">
-                <form>{% csrf_token %}<button type="submit" id="restart" name="restart" value="true" formaction="{% url 'instagram_filters:hand_gesture' %}">RESTART</button></form>
+                {% csrf_token %}<button type="submit" id="restart" name="restart">RESTART</button>
                 <video id="tempvid" hidden></video>
                 <canvas id="canvas" hidden></canvas>
             </div>
         </div>
+        <input id="url" val="{% url 'instagram_filters:hand_gesture' %}" type="hidden">
     </body>
     {% include 'footer.html' %}
 </html>
