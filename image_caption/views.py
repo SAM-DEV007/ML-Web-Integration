@@ -24,5 +24,5 @@ def model(request):
 
             return web
 
-    template = loader.get_template('image_caption.html')
+    template = loader.get_template('ic.html')
     return HttpResponse(template.render({}, request))
