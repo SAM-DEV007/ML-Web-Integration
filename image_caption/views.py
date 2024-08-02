@@ -14,12 +14,15 @@ def home(request):
 
 
 def model(request):
-    if not os.path.exists(str(settings.BASE_DIR / '..model_path..')):
-        web = redirect('main:main')
-        web.set_cookie('model', 1)
-        web.set_cookie('rightshift', 3)
+    models = 'weights', 'bias.pkl', 'tokenizer.pkl', 'weights/checkpoint', 'weights/model.tf.data-00000-of-00001', 'weights/model.tf.index'
 
-        return web
+    for i in models:
+        if not os.path.exists(str(settings.BASE_DIR / f'image_caption/Model/{i}')):
+            web = redirect('main:main')
+            web.set_cookie('model', 1)
+            web.set_cookie('rightshift', 3)
+
+            return web
 
     template = loader.get_template('image_caption.html')
     return HttpResponse(template.render({}, request))
