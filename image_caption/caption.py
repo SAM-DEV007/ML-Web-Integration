@@ -39,7 +39,7 @@ def create_model(tokenizer, mobilenet, output_layer, weights_path):
                   units=256, dropout_rate=0.5, num_layers=2, num_heads=2)
     
     model.build(input_shape=[(None, 224, 224, 3), (None, None)])
-    model.load_weights(str(weights_path))
+    model.load_weights(str(weights_path)).expect_partial()
 
     return model
 
