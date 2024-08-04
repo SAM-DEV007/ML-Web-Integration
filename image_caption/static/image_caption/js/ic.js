@@ -72,7 +72,8 @@ $(document).ready(function(){
                     console.log('Model not found!');
                     return;
                 }
-                writeReadOnly($('#predictsen'), response);
+                var response = JSON.parse(response);
+                writeReadOnly($('#predictsen'), response.caption);
             },
             error: function(error) {
                 writeReadOnly($('#predictsen'), 'ERROR: FAILED TO FETCH DATA');

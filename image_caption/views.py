@@ -6,6 +6,7 @@ from django.conf import settings
 from . import caption
 
 import os
+import json
 
 
 def home(request):
@@ -30,7 +31,11 @@ def model(request):
             npImg = request.FILES['image'].read()
             if npImg:
                 result, image = caption.get_caption(npImg)
-                print(result)
+                data = {
+                    'caption': result,
+                    'image': image
+                }
+                return HttpResponse(json.dumps(data))
 
     template = loader.get_template('ic.html')
     return HttpResponse(template.render({}, request))

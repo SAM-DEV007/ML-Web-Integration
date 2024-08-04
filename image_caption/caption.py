@@ -63,7 +63,7 @@ def add_caption(caption, image_path):
     draw = ImageDraw.Draw(new_img)
     draw.text(((width-w)//2, height+((height//10)-h)//2), '\n'.join(word_list), font=font, fill='white')
 
-    return new_img
+    return caption, new_img
 
 
 def encoded_image(img):
@@ -87,7 +87,7 @@ def get_caption(image):
         main()
 
     result = model.simple_gen(load_image(image))
-    img = add_caption(result, image)
+    result, img = add_caption(result, image)
 
     img = encoded_image(img)
 
