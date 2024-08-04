@@ -76,5 +76,6 @@ $(document).ready(function(){
         element.prop('readonly', true);
     }
 
-    $('#default').val($('#image').attr('src'));
+    $('#image1').attr('src', $('#default').val());
+    $('#image2').attr('src', $('#default').val());
 });
