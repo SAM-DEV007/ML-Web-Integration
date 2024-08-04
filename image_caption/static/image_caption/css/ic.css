@@ -148,12 +148,17 @@ input[type=file], input[type=file]::-webkit-file-upload-button {
     cursor: pointer;
     margin-top: 0px;
     margin-left: 140px;
+    margin-bottom: 20px;
 }
 
 .predict:hover {
     color: black;
     background-color: white;
     border-color: black;
+}
+
+#predict {
+    margin-top: 20px;
 }
 
 #generatedimage {

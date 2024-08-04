@@ -3,7 +3,7 @@ $(document).ready(function(){
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#image').attr('src', e.target.result);
+                $('#image1').attr('src', e.target.result);
             };
 
             reader.readAsDataURL(input.files[0]);
@@ -19,7 +19,7 @@ $(document).ready(function(){
             readURL($('#file')[0]);
         } else {
             $('#file').val('');
-            $('#image').attr('src', $('#default').val());
+            $('#image1').attr('src', $('#default').val());
             $('#imagesize').text('');
         }
     }
@@ -75,7 +75,4 @@ $(document).ready(function(){
         element.val(text);
         element.prop('readonly', true);
     }
-
-    $('#image1').attr('src', $('#default').val());
-    $('#image2').attr('src', $('#default').val());
 });
