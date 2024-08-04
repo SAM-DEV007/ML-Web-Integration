@@ -168,3 +168,4 @@ Web_Dev/
 # Model
 word_classifier/Model/WordClassifier_Model.h5
 human_emotions/Model/HumanEmotions_Model.h5
+requirements1.txt
