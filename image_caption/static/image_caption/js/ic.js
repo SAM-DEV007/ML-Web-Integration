@@ -52,6 +52,7 @@ $(document).ready(function(){
         var file = $('#file')[0].files[0];
         if (file === undefined){
             writeReadOnly($('#predictsen'), 'ERROR: NO FILE SELECTED');
+            $('#image2').attr('src', $('#default').val());
             return;
         }
 
@@ -69,6 +70,7 @@ $(document).ready(function(){
             success: function(response) {
                 if (response.includes('<!DOCTYPE html>')){
                     writeReadOnly($('#predictsen'), 'ERROR: FAILED TO FETCH DATA');
+                    $('#image2').attr('src', $('#default').val());
                     console.log('Model not found!');
                     return;
                 }
@@ -77,6 +79,7 @@ $(document).ready(function(){
                 $('#image2').attr('src', response.image);
             },
             error: function(error) {
+                $('#image2').attr('src', $('#default').val());
                 writeReadOnly($('#predictsen'), 'ERROR: FAILED TO FETCH DATA');
                 console.log(error);
             }
