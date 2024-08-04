@@ -283,18 +283,25 @@ model_data_path = settings.BASE_DIR / 'image_caption/Model'
 weights_path = model_data_path / 'weights/model.tf'
 
 IMAGE_SHAPE=(224, 224, 3)
-mobilenet = tf.keras.applications.MobileNetV3Large(
-    input_shape=IMAGE_SHAPE,
-    include_top=False,
-    include_preprocessing=True)
-mobilenet.trainable=False
 
-from_disk = CustomUnpickler(open(str(model_data_path / 'tokenizer.pkl'), "rb")).load()
-tokenizer = tf.keras.layers.TextVectorization(
-    max_tokens=from_disk['config']['max_tokens'],
-    standardize=standardize,
-    ragged=True)
-tokenizer.set_weights(from_disk['weights'])
+model = None
 
-output_layer = TokenOutput(tokenizer, banned_tokens=('', '[UNK]', '[START]'))
-model = create_model(tokenizer, mobilenet, output_layer, weights_path)
+def main():
+    global model
+
+    mobilenet = tf.keras.applications.MobileNetV3Large(
+        input_shape=IMAGE_SHAPE,
+        include_top=False,
+        include_preprocessing=True)
+    mobilenet.trainable=False
+
+    from_disk = CustomUnpickler(open(str(model_data_path / 'tokenizer.pkl'), "rb")).load()
+    tokenizer = tf.keras.layers.TextVectorization(
+        max_tokens=from_disk['config']['max_tokens'],
+        standardize=standardize,
+        ragged=True)
+    tokenizer.set_weights(from_disk['weights'])
+
+    output_layer = TokenOutput(tokenizer, banned_tokens=('', '[UNK]', '[START]'))
+    if not model:
+        model = create_model(tokenizer, mobilenet, output_layer, weights_path)
