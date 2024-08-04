@@ -77,8 +77,6 @@ $(document).ready(function(){
                 var response = JSON.parse(response);
                 writeReadOnly($('#predictsen'), response.caption);
                 $('#image2').attr('src', response.image);
-
-                $('#image2').addDownloadBtn('Download', 'btn')
             },
             error: function(error) {
                 $('#image2').attr('src', $('#default').val());
