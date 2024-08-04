@@ -30,10 +30,13 @@ def model(request):
         if request.method == 'POST':
             npImg = request.FILES['image'].read()
             if npImg:
-                result, image = caption.get_caption(npImg)
+                original_width, original_height = request.POST['width'], request.POST['height']
+                result, image, original_img = caption.get_caption(npImg, (original_width, original_height))
+
                 data = {
                     'caption': result,
-                    'image': image
+                    'image': image,
+                    'original_image': original_img
                 }
                 return HttpResponse(json.dumps(data))
 

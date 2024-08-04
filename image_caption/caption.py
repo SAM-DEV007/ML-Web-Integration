@@ -44,7 +44,7 @@ def create_model(tokenizer, mobilenet, output_layer, weights_path):
     return model
 
 
-def add_caption(caption, image_path):
+def add_caption(caption, image_path, original_size):
     caption = caption[0].upper() + caption[1:] + '.'
 
     buffer = np.frombuffer(image_path, dtype=np.uint8)
@@ -63,7 +63,9 @@ def add_caption(caption, image_path):
     draw = ImageDraw.Draw(new_img)
     draw.text(((width-w)//2, height+((height//10)-h)//2), '\n'.join(word_list), font=font, fill='white')
 
-    return caption, new_img
+    original_img = new_img.resize((int(original_size[0]), int(original_size[1])))
+
+    return caption, new_img, original_img
 
 
 def encoded_image(img):
@@ -80,18 +82,18 @@ def encoded_image(img):
     return encoded
 
 
-def get_caption(image):
+def get_caption(image, original_size):
     global model
 
     if not model:
         main()
 
     result = model.simple_gen(load_image(image))
-    result, img = add_caption(result, image)
+    result, img, original_img = add_caption(result, image, original_size)
 
-    img = encoded_image(img)
+    img, original_img = encoded_image(img), encoded_image(original_img)
 
-    return result, img
+    return result, img, original_img
 
 
 class CustomUnpickler(pickle.Unpickler):

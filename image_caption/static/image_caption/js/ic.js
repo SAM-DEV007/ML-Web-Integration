@@ -1,10 +1,19 @@
 $(document).ready(function(){
     let download_available = false;
+    let width, height;
+    let original_image;
 
     function readURL(input){    
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
+                var image = new Image();
+                image.src = e.target.result;
+                image.onload = function(){
+                    width = this.width;
+                    height = this.height;
+                };
+                delete image;
                 $('#image1').attr('src', e.target.result);
             };
 
@@ -60,6 +69,8 @@ $(document).ready(function(){
 
         var formData = new FormData();
         formData.append('image', file);
+        formData.append('width', width);
+        formData.append('height', height);
         formData.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
 
         $.ajax({
@@ -79,6 +90,7 @@ $(document).ready(function(){
                 var response = JSON.parse(response);
                 writeReadOnly($('#predictsen'), response.caption);
                 $('#image2').attr('src', response.image);
+                original_image = response.original_image;
                 download_available = true;
             },
             error: function(error) {
@@ -90,7 +102,10 @@ $(document).ready(function(){
     });
 
     $('#download').click(function(){
-        if (download_available) downloadImage($('#image2').attr('src'));
+        if (download_available) {
+            if ($('#originalsize')[0].checked) downloadImage(original_image);
+            else downloadImage($('#image2').attr('src'));
+        }
     });
 
     async function downloadImage(imageSrc) {

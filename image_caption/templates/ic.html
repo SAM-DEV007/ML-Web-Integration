@@ -22,7 +22,7 @@
                 <div id="model_main">
                     <div class="operation" id="inputdiv">
                         <p id="input" class="head">INPUT:</p>
-                        <p class="classify" id="inputdisc">The image will be resized to 224x224 px.<br><b>The size must be less than 4 MB.</b></p>
+                        <p class="classify" id="inputdisc">The image will be resized to 224x224 px for prediction.<br><b>The size must be less than 4 MB.</b></p>
                         <img class="image" id="image1" src="{% static 'image_caption/assets/default.png' %}" alt="Upload image" /><br>
                         <input id="file" type="file" accept=".png, .jpg, .jpeg" />
                         <b><p class="classify" id="imagesize"></p></b>
@@ -33,7 +33,9 @@
                         <p id="pred" class="head">PREDICTION:</p>
                         <input class="sentence" id="predictsen" type="text" placeholder="I generate caption..." readonly><br>
                         <img class="image" id="image2" src="{% static 'image_caption/assets/default.png' %}" alt="Upload image" /><br>
-                        <b><p class="classify" id="generatedimage">The image is resized to 640x480 on download.</p></b>
+                        <b><p class="classify" id="generatedimage">The downloaded image is resized to 640x480 by default.</p></b>
+                        <input type="checkbox" id="originalsize" name="originalsize" />
+                        <label for="originalsize" id="originalsizelabel" class="classify">Resize the downloaded image back to its original size.</label><br>
                         <h1 class="predict" id="download">DOWNLOAD</h1>
                     </div>
                 </div>

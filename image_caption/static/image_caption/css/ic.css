@@ -159,6 +159,7 @@ input[type=file], input[type=file]::-webkit-file-upload-button {
 
 #predict {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 #generatedimage {
@@ -168,6 +169,11 @@ input[type=file], input[type=file]::-webkit-file-upload-button {
 
 #download {
     margin-top: 20px;
+    margin-left: 0px;
+    margin-bottom: 20px;
+}
+
+#originalsizelabel {
     margin-left: 0px;
 }
 
