@@ -74,6 +74,7 @@ $(document).ready(function(){
                 }
                 var response = JSON.parse(response);
                 writeReadOnly($('#predictsen'), response.caption);
+                $('#image2').attr('src', response.image);
             },
             error: function(error) {
                 writeReadOnly($('#predictsen'), 'ERROR: FAILED TO FETCH DATA');
