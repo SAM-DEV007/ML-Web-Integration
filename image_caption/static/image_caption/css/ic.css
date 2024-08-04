@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+
+body {
+    margin: 38.8px;
+    margin-bottom: 0px;
+    background-color: black;
+    min-height: 737.2px;
+    display: flex;
+    flex-direction: column;
+}
+
+#logo {
+    height: 5rem;
+    width: 5rem;
+    cursor: pointer;
+}
+
+#title {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 2rem;
+    color: white;
+    margin-left: 35.8px;
+    cursor: pointer;
+}
+
+#wc {
+    color: white;
+    text-decoration: none;
+}
+
+#subtitle {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    color: yellow;
+    margin-left: 115.8px;
+    margin-top: -20px;
+    cursor: pointer;
+}
+
+#subtitle_link{
+    text-decoration: none;
+}
+
+#disclaimer {
+    font-family:'Times New Roman', Times, serif; 
+    font-size: 1rem;
+    color: white;
+    margin-left: 115.8px;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    min-height: calc(100vh - 270px);
+}
+
+.classify {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    font-size: 0.8rem;
+    margin-left: 115.8px;
+    margin-top: 50px;
+}
+
+#inputdisc {
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 40px;
+}
+
+#imagesize {
+    margin-left: 0px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+#model {
+    margin-top: 0.8px;
+    display: grid;
+    height: calc(100vh - 390px);
+    place-items: center;
+}
+
+.head {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+#model_main {
+    display: flex;
+}
+
+#inputdiv {
+    float: left;
+    margin-right: 60px;
+}
+
+#file {
+    margin-top: 5px;
+    margin-left: 20px;
+    color: white;
+}
+
+input[type=file], input[type=file]::-webkit-file-upload-button {
+    cursor: pointer;
+}
+
+#outputdiv {
+    float: right;
+}
+
+.sentence {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8rem;
+    width: 400px;
+    height: 30px;
+    border-radius: 10px;
+    margin: 10px;
+    margin-top: 0px;
+    padding: 3px 20px;
+    border-color: white;
+}
+
+.image {
+    height: 224px;
+    width: 224px;
+}
+
+#image2 {
+    margin-left: 100px;
+    margin-top: 23px;
+}
+
+.predict {
+    color: white;
+    font-size: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px;
+    width: fit-content;
+    cursor: pointer;
+    margin-top: 0px;
+    margin-left: 140px;
+}
+
+.predict:hover {
+    color: black;
+    background-color: white;
+    border-color: black;
+}
+
+#generatedimage {
+    margin-top: 20px;
+    margin-left: 0px;
+}
+
+#download {
+    margin-top: 20px;
+    margin-left: 0px;
+}
+
+#predictsen {
+    margin-top: 10px;
+    margin-left: 0px;
+    pointer-events: none;
+}
