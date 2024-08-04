@@ -83,6 +83,9 @@ def encoded_image(img):
 def get_caption(image):
     global model
 
+    if not model:
+        main()
+
     result = model.simple_gen(load_image(image))
     img = add_caption(result, image)
 
@@ -279,15 +282,8 @@ class TokenOutput(tf.keras.layers.Layer):
         return x + self.bias
 
 
-model_data_path = settings.BASE_DIR / 'image_caption/Model'
-weights_path = model_data_path / 'weights/model.tf'
-
-IMAGE_SHAPE=(224, 224, 3)
-
-model = None
-
 def main():
-    global model
+    global model, model_data_path, weights_path
 
     mobilenet = tf.keras.applications.MobileNetV3Large(
         input_shape=IMAGE_SHAPE,
@@ -303,5 +299,12 @@ def main():
     tokenizer.set_weights(from_disk['weights'])
 
     output_layer = TokenOutput(tokenizer, banned_tokens=('', '[UNK]', '[START]'))
-    if not model:
-        model = create_model(tokenizer, mobilenet, output_layer, weights_path)
+    model = create_model(tokenizer, mobilenet, output_layer, weights_path)
+
+
+model_data_path = settings.BASE_DIR / 'image_caption/Model'
+weights_path = model_data_path / 'weights/model.tf'
+
+IMAGE_SHAPE=(224, 224, 3)
+
+model = None
