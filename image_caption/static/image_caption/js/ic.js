@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    let download_available = false;
+
     function readURL(input){    
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -52,7 +54,7 @@ $(document).ready(function(){
         var file = $('#file')[0].files[0];
         if (file === undefined){
             writeReadOnly($('#predictsen'), 'ERROR: NO FILE SELECTED');
-            $('#image2').attr('src', $('#default').val());
+            reset_download();
             return;
         }
 
@@ -70,26 +72,49 @@ $(document).ready(function(){
             success: function(response) {
                 if (response.includes('<!DOCTYPE html>')){
                     writeReadOnly($('#predictsen'), 'ERROR: FAILED TO FETCH DATA');
-                    $('#image2').attr('src', $('#default').val());
+                    reset_download();
                     console.log('Model not found!');
                     return;
                 }
                 var response = JSON.parse(response);
                 writeReadOnly($('#predictsen'), response.caption);
                 $('#image2').attr('src', response.image);
+                download_available = true;
             },
             error: function(error) {
-                $('#image2').attr('src', $('#default').val());
+                reset_download();
                 writeReadOnly($('#predictsen'), 'ERROR: FAILED TO FETCH DATA');
                 console.log(error);
             }
         });
     });
 
+    $('#download').click(function(){
+        if (download_available) downloadImage($('#image2').attr('src'));
+    });
+
+    async function downloadImage(imageSrc) {
+        const image = await fetch(imageSrc)
+        const imageBlog = await image.blob()
+        const imageURL = URL.createObjectURL(imageBlog)
+      
+        const link = document.createElement('a')
+        link.href = imageURL
+        link.download = 'image.jpg'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      }
+
     function writeReadOnly(element, text){
         element.prop('readonly', false);
         element.val(text);
         element.prop('readonly', true);
+    }
+
+    function reset_download(){
+        $('#image2').attr('src', $('#default').val());
+        download_available = false;
     }
 
     $('#default').val($('#image1').attr('src'));
