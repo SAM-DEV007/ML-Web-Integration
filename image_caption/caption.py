@@ -3,12 +3,18 @@ import einops
 
 from PIL import Image, ImageDraw, ImageFont
 
+from django.conf import settings
+
 import os
+import io
 import shutil
 from pathlib import Path
 
+import numpy as np
+
 import pickle
 import textwrap
+import base64
 
 
 def standardize(s):
@@ -18,11 +24,12 @@ def standardize(s):
         return s
 
 
-def load_image(image_path):
+def load_image(img):
     global IMAGE_SHAPE
 
-    img = tf.io.read_file(image_path)
-    img = tf.io.decode_jpeg(img, channels=3)
+    buffer = np.frombuffer(img, dtype=np.uint8)
+    img = Image.open(io.BytesIO(buffer)).convert('RGB')
+    img = tf.convert_to_tensor(img, dtype=tf.float32)
     img = tf.image.resize(img, IMAGE_SHAPE[:-1])
     return img
 
@@ -40,7 +47,8 @@ def create_model(tokenizer, mobilenet, output_layer, weights_path):
 def add_caption(caption, image_path):
     caption = caption[0].upper() + caption[1:] + '.'
 
-    img = Image.open(image_path).resize((640, 480))
+    buffer = np.frombuffer(image_path, dtype=np.uint8)
+    img = Image.open(io.BytesIO(buffer)).resize((640, 480))
     width, height = img.size
 
     font = ImageFont.truetype('arial.ttf', 16)
@@ -56,6 +64,39 @@ def add_caption(caption, image_path):
     draw.text(((width-w)//2, height+((height//10)-h)//2), '\n'.join(word_list), font=font, fill='white')
 
     return new_img
+
+
+def encoded_image(img):
+    buffer_img = io.BytesIO()
+    img.save(buffer_img, format='JPEG')
+    buffer_img = buffer_img.getvalue()
+    buffer = base64.b64encode(buffer_img).decode('utf-8')
+
+    mime = 'image/jpg'
+    mime = mime + ';' if mime else ';'
+
+    encoded = f'data:{mime}base64,{buffer}'
+
+    return encoded
+
+
+def get_caption(image):
+    global model
+
+    result = model.simple_gen(load_image(image))
+    img = add_caption(result, image)
+
+    img = encoded_image(img)
+
+    return result, img
+
+
+class CustomUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        try:
+            return super().find_class(__name__, name)
+        except AttributeError:
+            return super().find_class(module, name)
 
 
 # Building the model
@@ -230,7 +271,7 @@ class TokenOutput(tf.keras.layers.Layer):
             units=tokenizer.vocabulary_size(), **kwargs)
         self.tokenizer = tokenizer
         self.banned_tokens = banned_tokens
-        self.bias = pickle.load(open(str(Path.cwd() / 'Model/Model_Data/bias.pkl'), "rb"))
+        self.bias = CustomUnpickler(open(str(settings.BASE_DIR / 'image_caption/Model/bias.pkl'), "rb")).load()
     
 
     def call(self, x):
@@ -238,49 +279,22 @@ class TokenOutput(tf.keras.layers.Layer):
         return x + self.bias
 
 
-if __name__ == '__main__':
-    model_data_path = Path(__file__).parent / 'Model/Model_Data'
-    weights_path = model_data_path / 'weights/model.tf'
-    
-    IMAGE_SHAPE=(224, 224, 3)
-    mobilenet = tf.keras.applications.MobileNetV3Large(
-        input_shape=IMAGE_SHAPE,
-        include_top=False,
-        include_preprocessing=True)
-    mobilenet.trainable=False
+model_data_path = settings.BASE_DIR / 'image_caption/Model'
+weights_path = model_data_path / 'weights/model.tf'
 
-    # Easier file handling
-    '''
-    if not os.path.exists(model_data_path):
-        os.mkdir(model_data_path)
-    shutil.move(Path.home() / '.keras/models/weights_mobilenet_v3_large_224_1.0_float_no_top_v2.h5', model_data_path / 'mobilenet_v3_large_weights.h5')
-    '''
+IMAGE_SHAPE=(224, 224, 3)
+mobilenet = tf.keras.applications.MobileNetV3Large(
+    input_shape=IMAGE_SHAPE,
+    include_top=False,
+    include_preprocessing=True)
+mobilenet.trainable=False
 
-    from_disk = pickle.load(open(str(model_data_path / 'tokenizer.pkl'), "rb"))
-    tokenizer = tf.keras.layers.TextVectorization(
-        max_tokens=from_disk['config']['max_tokens'],
-        standardize=standardize,
-        ragged=True)
-    tokenizer.set_weights(from_disk['weights'])
+from_disk = CustomUnpickler(open(str(model_data_path / 'tokenizer.pkl'), "rb")).load()
+tokenizer = tf.keras.layers.TextVectorization(
+    max_tokens=from_disk['config']['max_tokens'],
+    standardize=standardize,
+    ragged=True)
+tokenizer.set_weights(from_disk['weights'])
 
-    output_layer = TokenOutput(tokenizer, banned_tokens=('', '[UNK]', '[START]'))
-    model = create_model(tokenizer, mobilenet, output_layer, weights_path)
-
-    # Clears Captioned folder
-    shutil.rmtree(str(Path(__file__).parent / 'Images/Captioned'))
-
-    # Image Captioning
-    for i in os.listdir(str(Path(__file__).parent / 'Images')):
-        if os.path.isfile(str(Path(__file__).parent / 'Images/') + f'/{i}'):
-            if not os.path.exists(str(Path(__file__).parent / 'Images/Captioned')):
-                os.mkdir(str(Path(__file__).parent / 'Images/Captioned'))
-
-            image_name, image_type = i.split('.')
-            result = model.simple_gen(load_image(str(Path(__file__).parent / 'Images/') + f'/{i}'))
-            try:
-                result = model.simple_gen(load_image(str(Path(__file__).parent / 'Images/') + f'/{i}'))
-            except Exception as e:
-                print(e)
-                continue
-            img = add_caption(result, str(Path(__file__).parent / 'Images/') + f'/{i}')
-            img.save(str(Path(__file__).parent / 'Images/Captioned/') + f'/{image_name}_captioned.{image_type}')
+output_layer = TokenOutput(tokenizer, banned_tokens=('', '[UNK]', '[START]'))
+model = create_model(tokenizer, mobilenet, output_layer, weights_path)

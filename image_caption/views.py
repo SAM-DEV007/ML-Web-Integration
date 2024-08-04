@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.template import loader
 from django.conf import settings
 
+from . import caption
+
 import os
 
 
@@ -23,6 +25,12 @@ def model(request):
             web.set_cookie('rightshift', 3)
 
             return web
+        
+        if request.method == 'POST':
+            npImg = request.FILES['image'].read()
+            if npImg:
+                result, image = caption.get_caption(npImg)
+                print(result)
 
     template = loader.get_template('ic.html')
     return HttpResponse(template.render({}, request))
