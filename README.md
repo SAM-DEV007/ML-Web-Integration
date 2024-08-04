@@ -15,6 +15,7 @@ The repositories of the projects included:
 - [Instagram Filters](https://github.com/SAM-DEV007/Instagram-Filters)
 - [Word Classifier](https://github.com/SAM-DEV007/Word-Classifier)
 - [Human Emotions](https://github.com/SAM-DEV007/Human-Emotions)
+- [Image_Caption](https://github.com/SAM-DEV007/Image-Caption)
 
 **This is project is now abondaned and no new AI projects will be added.**
 
