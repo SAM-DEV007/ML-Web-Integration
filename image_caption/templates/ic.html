@@ -39,8 +39,8 @@
                 </div>
             </div>
         </div>
-        <input id="url" val="{% url 'word_classifier:wc_model' %}" type="hidden">
-        <input id="default" val="{% static 'image_caption/assets/default.png' %}" type="hidden">
+        <input id="url" val="{% url 'image_caption:ic_model' %}" type="hidden" readonly>
+        <input id="default" val="{% static 'image_caption/assets/default.png' %}" type="hidden" readonly>
     </body>
     {% include 'footer.html' %}
 </html>
