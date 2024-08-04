@@ -64,7 +64,7 @@ $(document).ready(function(){
             data: formData,
             type: 'POST',
             cache: false,
-            contentType: 'multipart/form-data',
+            contentType: false,
             processData: false,
             success: function(response) {
                 if (response.includes('<!DOCTYPE html>')){
