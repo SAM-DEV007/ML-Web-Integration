@@ -49,7 +49,7 @@ $(document).ready(function(){
     $('#predict').click(function(){
         writeReadOnly($('#predictsen'), 'WAITING...');
         $.ajax({
-            url: "{% url 'image_caption:ic_model' %}",
+            url: "model",
             data: {
                 sentence: $('#file')[0].files[0],
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()

@@ -18,7 +18,7 @@ $(document).ready(function(){
     $('#predict').click(function(){
         writeReadOnly($('#predictsen'), 'WAITING...');
         $.ajax({
-            url: "{% url 'word_classifier:wc_model' %}",
+            url: "model",
             data: {
                 sentence: $('#sentence').val(),
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
