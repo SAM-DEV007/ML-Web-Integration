@@ -2,6 +2,7 @@ import tensorflow as tf
 import einops
 
 from PIL import Image, ImageDraw, ImageFont
+from sys import platform
 
 from django.conf import settings
 
@@ -51,7 +52,17 @@ def add_caption(caption, image_path, original_size):
     img = Image.open(io.BytesIO(buffer)).resize((640, 480))
     width, height = img.size
 
-    font = ImageFont.truetype('arial.ttf', 16)
+    match platform:
+        case 'linux':
+            FONT = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
+        case 'linux2':
+            FONT = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
+        case 'darwin':
+            FONT = '/Library/Fonts/Arial.ttf'
+        case "win32":
+            FONT = 'arial.ttf'
+
+    font = ImageFont.truetype(FONT, 16)
     _, _, w, h = font.getbbox(caption)
     
     wrapper = textwrap.TextWrapper(width=int(width*0.15))
