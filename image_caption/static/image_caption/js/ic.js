@@ -49,12 +49,15 @@ $(document).ready(function(){
     $('#predict').click(function(){
         writeReadOnly($('#predictsen'), 'WAITING...');
         $.ajax({
-            url: $('#url').val(),
+            url: "{% url 'image_caption:ic_model' %}",
             data: {
                 sentence: $('#file')[0].files[0],
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
             },
             type: 'POST',
+            cache: false,
+            contentType: 'multipart/form-data',
+            processData: false,
             success: function(response) {
                 if (response.includes('<!DOCTYPE html>')){
                     writeReadOnly($('#predictsen'), 'ERROR: FAILED TO FETCH DATA');
