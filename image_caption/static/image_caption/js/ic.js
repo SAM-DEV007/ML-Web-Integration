@@ -48,12 +48,20 @@ $(document).ready(function(){
 
     $('#predict').click(function(){
         writeReadOnly($('#predictsen'), 'WAITING...');
+
+        var file = $('#file')[0].files[0];
+        if (file === undefined){
+            writeReadOnly($('#predictsen'), 'ERROR: NO FILE SELECTED');
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append('image', file);
+        formData.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+
         $.ajax({
             url: "model",
-            data: {
-                sentence: $('#file')[0].files[0],
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-            },
+            data: formData,
             type: 'POST',
             cache: false,
             contentType: 'multipart/form-data',
