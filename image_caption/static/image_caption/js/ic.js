@@ -3,6 +3,8 @@ $(document).ready(function(){
     let width, height;
     let original_image;
 
+    let download_filename;
+
     function readURL(input){    
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -22,12 +24,13 @@ $(document).ready(function(){
     }
 
     function validateFileType(){
-        var fileName = $('#file').val();
+        var fileName = $('#file')[0].files[0].name;
         var idxDot = fileName.lastIndexOf(".") + 1;
         var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
         
         if ((extFile=="jpg" || extFile=="jpeg" || extFile=="png") && (sizeText() <= 4)){
             readURL($('#file')[0]);
+            download_filename = fileName.substr(0, idxDot-1) + '_captioned.' + extFile;
         } else {
             $('#file').val('');
             $('#image1').attr('src', $('#default').val());
@@ -109,16 +112,16 @@ $(document).ready(function(){
     });
 
     async function downloadImage(imageSrc) {
-        const image = await fetch(imageSrc)
-        const imageBlog = await image.blob()
-        const imageURL = URL.createObjectURL(imageBlog)
+        const image = await fetch(imageSrc);
+        const imageBlog = await image.blob();
+        const imageURL = URL.createObjectURL(imageBlog);
       
-        const link = document.createElement('a')
-        link.href = imageURL
-        link.download = 'image.jpg'
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
+        const link = document.createElement('a');
+        link.href = imageURL;
+        link.download = download_filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       }
 
     function writeReadOnly(element, text){
