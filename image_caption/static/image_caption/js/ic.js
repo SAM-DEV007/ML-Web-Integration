@@ -122,7 +122,7 @@ $(document).ready(function(){
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-      }
+    }
 
     function writeReadOnly(element, text){
         element.prop('readonly', false);
