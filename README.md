@@ -4,9 +4,9 @@ Web integration of ML projects
 # About
 Website link: https://ml-integrations.onrender.com/
 
-****Warning: The website is hosted on a free service platform with highly limited resources below the recommendations of machine learning models. The website loading may be slow and the webcam streaming may hang. To fully experience the website, it is recommended to clone the repository and use local webhosting.***
+***Warning: The website is hosted on a free service platform with highly limited resources below the recommendations of machine learning models. The website loading may be slow and the webcam streaming may hang. To fully experience the website, it is recommended to clone the repository and use local webhosting.***
 
-***It is advised to not use the word classifier section (using PREDICT button) and human emotions section from the above link as it will crash the website (usage of memory above free quota).****
+***It is advised to not use the word classifier section (using PREDICT button), human emotions section and uploading image of more than 1 MB in the image caption section from the above link as it will crash the website (usage of memory above free quota).***
 
 The backend is written in Python based on Django. The website aims to feature most of the Machine Learning projects done by me and stack them in one place.
 `build.sh` is for production purpose and can be ignored.
